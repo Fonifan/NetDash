@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Cell from './Cell';
 import { createUseStyles } from 'react-jss';
 import { Widgets } from '../widgets/WidgetFactory';
-import Widget from './Widget';
-import WidgetModal from './WidgetModal';
+import WidgetModal from '../widgets/WidgetModal';
+import Widget from '../widgets/Widget';
 
 const gridGap = 20;
 const cellSize = 100 + gridGap;
