@@ -4,8 +4,8 @@ import com.netdash.rest.query.serialization.QueryMetadata
 import org.springframework.stereotype.Service
 
 @Service
-class DataService() {
-    fun createData(metaData: QueryMetadata) {
+class QueryService {
+    fun executeQuery(metaData: QueryMetadata) {
 
     }
 }

@@ -5,5 +5,6 @@ data class DatasourceMetadata(
         val password: String,
         val url: String,
         val type: DatasourceType,
-        val id: Int? = null
-);
+        val name: String,
+        val id: Long? = null
+)

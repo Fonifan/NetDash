@@ -1,0 +1,32 @@
+###
+GET http://localhost:8080/api/datasource
+
+###
+GET http://localhost:8080/api/datasource/5
+
+###
+POST http://localhost:8080/api/datasource
+Content-Type: application/json
+
+{
+    "userName": "user",
+    "password": "user",
+    "type": "postgresql",
+    "name": "Main",
+    "url": "jdbc:postgresql://localhost:5961/user-db"
+}
+
+###
+PATCH http://localhost:8080/api/datasource/12
+Content-Type: application/json
+
+{
+    "userName": "user",
+    "password": "user",
+    "type": "postgresql",
+    "name": "User DB",
+    "url": "jdbc:postgresql://localhost:5961/user-db"
+}
+
+###
+DELETE http://localhost:8080/api/datasource/3
