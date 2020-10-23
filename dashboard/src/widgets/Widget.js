@@ -12,12 +12,17 @@ const useStyles = createUseStyles({
 		gridColumnEnd: props.colEnd,
 		gridRowStart: props.rowStart,
 		gridRowEnd: props.rowEnd,
-		textAlign: 'center'
+		display: 'flex',
+		flexDirection: 'column'
 	}),
 	header: {
 		display: 'flex',
 		flexDirection: 'row',
-		justifyContent: 'space-between'
+		justifyContent: 'space-between',
+		textAlign: 'center'
+	},
+	body: {
+		height: '80%'
 	}
 });
 
@@ -47,15 +52,18 @@ function Widget (props) {
 		]);
 	}
 	const component = create(type, { data });
-	return (<div className={classes.item}>
-		<div className={classes.header}>
-			<InputBase defaultValue={name}/>
-			<IconButton color="primary" >
-				<StorageIcon />
-			</IconButton>
-		</div>
-		{component}
-	</div>);
+	return (
+		<div className={classes.item}>
+			<div className={classes.header}>
+				<InputBase defaultValue={name}/>
+				<IconButton color="primary" >
+					<StorageIcon />
+				</IconButton>
+			</div>
+			<div className={classes.body}>
+				{component}
+			</div>
+		</div>);
 }
 
 Widget.propTypes = {

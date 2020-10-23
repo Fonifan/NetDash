@@ -1,17 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import PropTypes from 'prop-types';
+import Constant from '../Constant';
 
 const useStyles = createUseStyles({
 	cell: {
-		width: '100px',
-		height: ' 100px',
-		borderRadius: '10px',
+		width: `${Constant.CellSize}px`,
+		height: `${Constant.CellSize}px`,
 		borderStyle: 'solid',
-		borderColor: '#686868'
+		borderColor: '#aaaaaa'
 	},
 	hoverStyle: {
-		borderColor: '#000000',
 		background: '#c9ffcc'
 	}
 });

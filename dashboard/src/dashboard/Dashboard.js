@@ -5,17 +5,15 @@ import { Widgets } from '../widgets/WidgetFactory';
 import WidgetModal from '../widgets/WidgetModal';
 import Widget from '../widgets/Widget';
 
-const gridGap = 20;
-const cellSize = 100 + gridGap;
+const cellSize = 100;
 
 const useStyles = createUseStyles({
 	grid: props => ({
 		width: '95%',
 		height: '95vh',
 		display: 'grid',
-		gridGap: gridGap,
-		gridTemplateColumns: `repeat(${props.cellsCount}, 100px)`,
-		gridTemplateRows: `repeat(${props.rowsCount}, 100px)`,
+		gridTemplateColumns: `repeat(${props.cellsCount}, ${cellSize}px)`,
+		gridTemplateRows: `repeat(${props.rowsCount}, ${cellSize}px)`,
 		padding: '20px'
 	})
 });
@@ -115,4 +113,4 @@ function Dashboard () {
 	}
 }
 
-export default Dashboard;
+export { Dashboard, cellSize };

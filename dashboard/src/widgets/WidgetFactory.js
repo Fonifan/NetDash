@@ -1,17 +1,17 @@
 import PieChart from './components/PieChart';
 import React from 'react';
-import { WidgetName } from './Constant';
 import BarChart from './components/BarChart';
+import Constant from '../Constant';
 
 const Widgets = {
-	[WidgetName.PIE]: {
+	[Constant.WidgetName.PIE]: {
 		minSize: {
 			col: 3,
-			row: 4
+			row: 3
 		},
 		name: 'Pie'
 	},
-	[WidgetName.BAR]: {
+	[Constant.WidgetName.BAR]: {
 		minSize: {
 			col: 4,
 			row: 5
@@ -22,9 +22,9 @@ const Widgets = {
 
 function create (name, props) {
 	switch (name) {
-	case WidgetName.PIE:
+	case Constant.WidgetName.PIE:
 		return <PieChart data={props.data}/>;
-	case WidgetName.BAR:
+	case Constant.WidgetName.BAR:
 		return <BarChart data={props.data}/>;
 	default:
 		return null;
