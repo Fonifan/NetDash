@@ -14,9 +14,14 @@ class QueryService(private val datasourceTemplateCache: DatasourceTemplateCache)
         val jdbcTemplate = datasourceTemplateCache.get(metaData.datasourceId)
         val dataObject = ArrayList<DataObject>()
         val mapper = QueryMapper(metaData.mapping)
-
-        jdbcTemplate.query(metaData.query, metaData.queryParameters) { rs: ResultSet, _: Int ->
-            dataObject.add(mapper.map(rs))
+        if (metaData.queryParameters == null || metaData.queryParameters.map.isEmpty()) {
+            jdbcTemplate.query(metaData.query) { rs: ResultSet, _: Int ->
+                dataObject.add(mapper.map(rs))
+            }
+        } else {
+            jdbcTemplate.query(metaData.query, metaData.queryParameters.map) { rs: ResultSet, _: Int ->
+                dataObject.add(mapper.map(rs))
+            }
         }
 
         return QueryData(dataObject)

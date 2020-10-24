@@ -9,11 +9,11 @@ POST http://localhost:8080/api/datasource
 Content-Type: application/json
 
 {
-    "userName": "user",
-    "password": "user",
+    "userName": "app",
+    "password": "app",
     "type": "postgresql",
-    "name": "Main",
-    "url": "jdbc:postgresql://localhost:5961/user-db"
+    "name": "App DB",
+    "url": "jdbc:postgresql://localhost:5962/app-db"
 }
 
 ###
