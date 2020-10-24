@@ -1,0 +1,13 @@
+###
+POST http://localhost:8080/api/query
+Content-Type: application/json
+
+{
+	"query": "select name from connections",
+	"queryParameters": [
+	],
+	"mapping": [
+	],
+	"datasourceId": 4
+}
+
