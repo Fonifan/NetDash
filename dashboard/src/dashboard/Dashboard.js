@@ -9,12 +9,10 @@ const cellSize = 100;
 
 const useStyles = createUseStyles({
 	grid: props => ({
-		width: '95%',
 		height: '95vh',
 		display: 'grid',
 		gridTemplateColumns: `repeat(${props.cellsCount}, ${cellSize}px)`,
-		gridTemplateRows: `repeat(${props.rowsCount}, ${cellSize}px)`,
-		padding: '20px'
+		gridTemplateRows: `repeat(${props.rowsCount}, ${cellSize}px)`
 	})
 });
 
