@@ -2,7 +2,7 @@ package com.netdash.rest.query.serialization
 
 data class QueryMetadata(
         val query: String,
-        val queryParameters: QueryParameters? = null,
-        val mapping: Mapping,
+        val queryParameters: Map<String, *>? = null,
+        val mapping: List<QueryMapping>,
         val datasourceId: Long
 )

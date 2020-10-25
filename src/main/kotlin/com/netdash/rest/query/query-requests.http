@@ -3,20 +3,24 @@ POST http://localhost:8080/api/query
 Content-Type: application/json
 
 {
-	"query": "select name from datasources where id = :id",
+	"query": "select name, type, url from datasources where id = :id",
 	"queryParameters": {
-		"map": {
-			"id": 6
-		}
+		"id": 5
 	},
-	"mapping": {
-		"fields": [
-			{
-				"source": "name",
-				"target": "x"
-			}
-		]
-	},
+	"mapping": [
+		{
+			"source": "name",
+			"target": "x"
+		},
+		{
+			"source": "type",
+			"target": "y"
+		},
+        {
+            "source": "url",
+            "target": "z"
+        }
+	],
 	"datasourceId": 7
 }
 

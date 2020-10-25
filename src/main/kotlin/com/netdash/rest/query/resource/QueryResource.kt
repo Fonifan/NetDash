@@ -1,6 +1,5 @@
 package com.netdash.rest.query.resource
 
-import com.netdash.rest.query.serialization.QueryData
 import com.netdash.rest.query.serialization.QueryMetadata
 import com.netdash.rest.query.service.QueryService
 import org.springframework.http.ResponseEntity
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/query")
 class QueryResource(private val queryService: QueryService) {
     @PostMapping
-    fun executeQuery(@RequestBody queryMetaData: QueryMetadata): ResponseEntity<QueryData> {
+    fun executeQuery(@RequestBody queryMetaData: QueryMetadata): ResponseEntity<List<Map<String, *>>> {
         return ResponseEntity.ok(queryService.executeQuery(queryMetaData))
     }
 }
