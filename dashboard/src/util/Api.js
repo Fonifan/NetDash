@@ -8,11 +8,11 @@ class Api {
 		}).then((response) => response.json());
 	}
 
-	static post (url, object) {
+	static post (url, body) {
 		const queryUrl = serverUrl + url;
 		return fetch(queryUrl, {
 			method: 'POST',
-			body: JSON.stringify(object),
+			body: JSON.stringify(body),
 			headers: {
 				'Content-Type': 'application/json'
 			}

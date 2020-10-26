@@ -9,14 +9,22 @@ const Widgets = {
 			col: 3,
 			row: 3
 		},
-		name: 'Pie'
+		name: 'Pie',
+		mapping: [
+			'id',
+			'value'
+		]
 	},
 	[Constant.WidgetName.BAR]: {
 		minSize: {
 			col: 4,
 			row: 5
 		},
-		name: 'Bar'
+		name: 'Bar',
+		mapping: [
+			'id',
+			'value'
+		]
 	}
 };
 

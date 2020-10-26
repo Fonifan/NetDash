@@ -5,22 +5,22 @@ import Button from '@material-ui/core/Button';
 import DatasourceService from './service/DatasourceService';
 import ListItem from '@material-ui/core/ListItem';
 import DatasourceItemPresenter from './DatasourceItemPresenter';
+import NewDatasourceDialog from './NewDatasourceDialog';
 
 function DatasourcePresenter () {
 	const [datasources, setDatasources] = useState();
+	const [newDatasourceModalOpen, setNewDatasourceModalOpen] = useState(false);
 
 	useEffect(() => {
 		DatasourceService.getAll().then((datasources) => {
-			console.log(datasources);
 			setDatasources(datasources);
 		});
 	}, []);
 
 	return (<div>
 		<Button
-			color="secondary"
 			startIcon={<AddBoxTwoToneIcon/>}
-		>
+			onClick={() => setNewDatasourceModalOpen(true)}>
 			Add Datasource
 		</Button>
 		<List>
@@ -28,11 +28,14 @@ function DatasourcePresenter () {
 				const datasource = datasources[key];
 
 				return (
-					<ListItem button key={key}>
+					<ListItem divider key={key}>
 						<DatasourceItemPresenter {...datasource}/>
 					</ListItem>);
 			}) : null}
 		</List>
+		<NewDatasourceDialog
+			open={newDatasourceModalOpen}
+			onClose={() => setNewDatasourceModalOpen(false)}/>
 	</div>);
 }
 

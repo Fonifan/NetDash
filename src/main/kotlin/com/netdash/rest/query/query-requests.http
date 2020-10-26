@@ -3,23 +3,17 @@ POST http://localhost:8080/api/query
 Content-Type: application/json
 
 {
-	"query": "select name, type, url from datasources where id = :id",
-	"queryParameters": {
-		"id": 5
-	},
+	"query": "select name, username from datasources",
+
 	"mapping": [
 		{
 			"source": "name",
 			"target": "x"
 		},
 		{
-			"source": "type",
+			"source": "username",
 			"target": "y"
-		},
-        {
-            "source": "url",
-            "target": "z"
-        }
+		}
 	],
 	"datasourceId": 7
 }

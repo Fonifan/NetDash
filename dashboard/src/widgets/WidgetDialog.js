@@ -20,7 +20,7 @@ const useStyles = createUseStyles({
 	}
 });
 
-function WidgetModal (props) {
+function WidgetDialog (props) {
 	const classes = useStyles();
 
 	if (!props.selectedCell) { return null; }
@@ -52,4 +52,4 @@ function WidgetModal (props) {
 		</Dialog>);
 }
 
-export default WidgetModal;
+export default WidgetDialog;

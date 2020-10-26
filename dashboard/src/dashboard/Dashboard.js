@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Cell from './Cell';
 import { createUseStyles } from 'react-jss';
 import { Widgets } from '../widgets/WidgetFactory';
-import WidgetModal from '../widgets/WidgetModal';
+import WidgetDialog from '../widgets/WidgetDialog';
 import Widget from '../widgets/Widget';
 
 const cellSize = 100;
@@ -46,7 +46,7 @@ function Dashboard () {
 	return (
 		<div ref={myRef} className={classes.grid}>
 			{cells}
-			<WidgetModal
+			<WidgetDialog
 				selectedCell={selectedCell}
 				open={widgetModalOpen}
 				onClose={() => setWidgetModalOpen(false)}
@@ -56,7 +56,7 @@ function Dashboard () {
 	);
 
 	function placeWidget (col, row, type) {
-		const { name, minSize } = Widgets[type];
+		const { name, minSize, mapping } = Widgets[type];
 		setComponents([...components, {
 			size: {
 				colStart: col,
@@ -65,7 +65,8 @@ function Dashboard () {
 				rowEnd: row + minSize.row
 			},
 			name,
-			type
+			type,
+			mapping
 		}]);
 	}
 
