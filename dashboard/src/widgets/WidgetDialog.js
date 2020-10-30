@@ -30,7 +30,7 @@ function WidgetDialog (props) {
 	Object.keys(Widgets).forEach((key) => {
 		const { name } = Widgets[key];
 		listItems.push(
-			<ListItem button
+			<ListItem button divider
 				onClick={() => {
 					props.handleWidgetSelect(col, row, key);
 					props.onClose();

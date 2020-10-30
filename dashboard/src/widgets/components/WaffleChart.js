@@ -1,7 +1,7 @@
 import React from 'react';
-import { ResponsiveBar } from '@nivo/bar';
+import { ResponsiveWaffle } from '@nivo/waffle';
 
-function BarChart (props) {
+function WaffleChart (props) {
 	let { data } = props;
 	if (data === null) {
 		data = [
@@ -22,13 +22,25 @@ function BarChart (props) {
 			}
 		];
 	}
+	let total = 0;
+	data.forEach((obj) => {
+		total += obj.value;
+	});
 	return (
-		<ResponsiveBar
+		<ResponsiveWaffle
 			data={data}
-			margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
+			margin={{
+				top: 40,
+				right: 80,
+				bottom: 80,
+				left: 80
+			}}
+			total={total}
+			rows={18}
+			columns={14}
 			colors={{ scheme: 'nivo' }}
 			animate={true}
 		/>);
 }
 
-export default BarChart;
+export default WaffleChart;

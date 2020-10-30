@@ -20,29 +20,3 @@ class QueryMetadataSerializer {
 }
 
 export default QueryMetadataSerializer;
-
-/*
-datasourceId: 7
-mapping:
-	x: "name"
-	y: "username"
-query: "select name, username from datasources"
- */
-
-/*
-{
-	"query": "select name, username from datasources",
-
-	"mapping": [
-		{
-			"source": "name",
-			"target": "x"
-		},
-		{
-			"source": "username",
-			"target": "y"
-		}
-	],
-	"datasourceId": 7
-}
- */

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Link, NavLink
+	Link
 } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import List from '@material-ui/core/List';

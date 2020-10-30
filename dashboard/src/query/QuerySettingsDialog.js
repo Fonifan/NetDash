@@ -8,7 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { createUseStyles } from 'react-jss';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import AddBoxTwoToneIcon from '@material-ui/icons/AddBoxTwoTone';
 import { SaveTwoTone } from '@material-ui/icons';
 
 const useStyles = createUseStyles({
@@ -59,10 +58,9 @@ function QuerySettingsDialog (props) {
 					className={classes.field}/>
 				{props.mapping.map((mappingField) =>
 					<div className={classes.mappingField} key={mappingField}>
-						<TextField label='Source'
+						<TextField label={mappingField}
 							value={mapping[mappingField]}
 							onChange={(event) => setMapping({ ...mapping, [mappingField]: event.target.value })}/>
-						<TextField label='Target' defaultValue={mappingField} disabled={true}/>
 					</div>)
 				}
 				<Button

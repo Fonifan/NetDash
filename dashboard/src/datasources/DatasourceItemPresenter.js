@@ -2,6 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { IconButton } from '@material-ui/core';
 import { DeleteTwoTone, EditTwoTone } from '@material-ui/icons';
+
 const useStyles = createUseStyles({
 	presenter: {
 		display: 'flex',

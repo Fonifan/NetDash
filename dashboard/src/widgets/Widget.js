@@ -21,10 +21,14 @@ const useStyles = createUseStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		justifyContent: 'space-between',
-		textAlign: 'center'
+		textAlign: 'center',
+		width: '100%'
 	},
 	body: {
 		height: '80%'
+	},
+	name: {
+		flexGrow: 2
 	}
 });
 
@@ -39,30 +43,11 @@ function Widget (props) {
 			QueryService.execute(queryMetadata).then(setData);
 		}
 	}, [queryMetadata]);
-	if (data === null) {
-		setData([
-			{
-				id: 'a',
-				label: 'a',
-				value: 101
-			},
-			{
-				id: 'b',
-				label: 'b',
-				value: 10
-			},
-			{
-				id: 'c',
-				label: 'c',
-				value: 200
-			}
-		]);
-	}
 	const component = create(type, { data });
 	return (
 		<div className={classes.item}>
 			<div className={classes.header}>
-				<InputBase defaultValue={name}/>
+				<InputBase defaultValue={name} className={classes.name}/>
 				<IconButton onClick={() => setSettingsDialogOpen(true)}>
 					<StorageIcon/>
 				</IconButton>

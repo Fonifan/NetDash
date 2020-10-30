@@ -2,12 +2,13 @@ import PieChart from './components/PieChart';
 import React from 'react';
 import BarChart from './components/BarChart';
 import Constant from '../Constant';
+import WaffleChart from './components/WaffleChart';
 
 const Widgets = {
 	[Constant.WidgetName.PIE]: {
 		minSize: {
-			col: 3,
-			row: 3
+			col: 4,
+			row: 4
 		},
 		name: 'Pie',
 		mapping: [
@@ -17,10 +18,21 @@ const Widgets = {
 	},
 	[Constant.WidgetName.BAR]: {
 		minSize: {
-			col: 4,
-			row: 5
+			col: 5,
+			row: 6
 		},
 		name: 'Bar',
+		mapping: [
+			'id',
+			'value'
+		]
+	},
+	[Constant.WidgetName.WAFFLE]: {
+		minSize: {
+			col: 5,
+			row: 6
+		},
+		name: 'Waffle',
 		mapping: [
 			'id',
 			'value'
@@ -34,6 +46,8 @@ function create (name, props) {
 		return <PieChart data={props.data}/>;
 	case Constant.WidgetName.BAR:
 		return <BarChart data={props.data}/>;
+	case Constant.WidgetName.WAFFLE:
+		return <WaffleChart data={props.data}/>;
 	default:
 		return null;
 	}

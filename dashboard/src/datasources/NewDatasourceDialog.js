@@ -1,6 +1,6 @@
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import { createUseStyles } from 'react-jss';
@@ -24,28 +24,63 @@ const useStyles = createUseStyles({
 
 function NewDatasourceDialog (props) {
 	const classes = useStyles();
-
+	const [name, setName] = useState();
+	const [userName, setUserName] = useState();
+	const [password, setPassword] = useState();
+	const [url, setUrl] = useState();
+	const [type, setType] = useState('postgresql');
 	return (
 		<Dialog
 			open={props.open}
 			onClose={props.onClose}>
 			<DialogTitle>Add new datasource</DialogTitle>
 			<form className={classes.form} noValidate autoComplete='off'>
-				<TextField id='name' label='Name'/>
+				<TextField
+					id='name'
+					label='Name'
+					value={name}
+					onChange={(event) => setName(event.target.value)}/>
 				<div className={classes.credentials}>
-					<TextField id='username' label='Username'/>
-					<TextField id='password' type='password' label='Password'/>
+					<TextField
+						id='username'
+						label='Username'
+						value={userName}
+						onChange={(event) => setUserName(event.target.value)}/>
+					<TextField
+						id='password'
+						type='password'
+						label='Password'
+						value={password}
+						onChange={(event) => setPassword(event.target.value)}/>
 				</div>
-				<TextField id='url' label='Url'/>
+				<TextField
+					id='url'
+					label='Url'
+					value={url}
+					onChange={(event) => setUrl(event.target.value)}/>
 				<div className={classes.select}>
 					<InputLabel id='type'>Datasource Type</InputLabel>
-					<Select labelId='type' id='type' label='Type' defaultValue='postgresql'>
+					<Select
+						labelId='type'
+						id='type'
+						label='Type'
+						value={type}
+						onChange={(event) => setType(event.target.value)}>
 						<MenuItem value='postgresql'>PostgreSQL</MenuItem>
 						<MenuItem value='mysql'>MySQL</MenuItem>
 					</Select>
 				</div>
 			</form>
-			<Button>
+			<Button onClick={() => {
+				props.onSubmit({
+					name,
+					userName,
+					password,
+					url,
+					type
+				});
+				props.onClose();
+			}}>
 				Submit
 			</Button>
 		</Dialog>);

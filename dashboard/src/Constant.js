@@ -6,7 +6,8 @@ export default class Constant {
 	static get WidgetName () {
 		return {
 			PIE: 'pie',
-			BAR: 'bar'
+			BAR: 'bar',
+			WAFFLE: 'waffle'
 		};
 	}
 }

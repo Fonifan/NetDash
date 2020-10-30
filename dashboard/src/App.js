@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { Dashboard } from './dashboard/Dashboard';
 import { createUseStyles } from 'react-jss';
@@ -40,13 +40,13 @@ function App () {
 
 				<div className={classes.content}>
 					<Switch>
-						<Route path="/datasources">
+						<Route path='/datasources'>
 							<DatasourcePresenter/>
 						</Route>
-						<Route path="/dashboard">
+						<Route path='/dashboard'>
 							<Dashboard/>
 						</Route>
-						<Route path="/">
+						<Route path='/'>
 							<HousePresenter/>
 						</Route>
 					</Switch>

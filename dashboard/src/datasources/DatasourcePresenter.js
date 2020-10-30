@@ -35,7 +35,13 @@ function DatasourcePresenter () {
 		</List>
 		<NewDatasourceDialog
 			open={newDatasourceModalOpen}
-			onClose={() => setNewDatasourceModalOpen(false)}/>
+			onClose={() => setNewDatasourceModalOpen(false)}
+			onSubmit={(datasource) => {
+				DatasourceService.add(datasource).then((id) => {
+					datasource.id = id;
+					setDatasources({ ...datasources, [id]: datasource });
+				});
+			}}/>
 	</div>);
 }
 
