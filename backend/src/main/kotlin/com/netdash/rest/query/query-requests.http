@@ -1,0 +1,16 @@
+###
+POST http://localhost:8080/api/query
+Content-Type: application/json
+
+{
+	"query": "SELECT sub.count, sub.application FROM (SELECT count(*) AS count, application FROM conversations GROUP BY application ORDER BY count) AS sub WHERE sub.count > 10",
+	"mapping": {
+		"type": "flat",
+		"variables": {
+			"x": "application",
+			"y": "count"
+		}
+	},
+	"datasourceId": 2
+}
+
