@@ -7,6 +7,8 @@ import StorageIcon from '@material-ui/icons/Storage';
 import IconButton from '@material-ui/core/IconButton';
 import QuerySettingsDialog from '../query/QuerySettingsDialog';
 import QueryService from '../query/service/QueryService';
+import { connect } from 'react-redux';
+import { addVariable, removeVariable } from '../variable/state/VariableAction';
 
 const useStyles = createUseStyles({
 	item: props => ({
@@ -38,11 +40,12 @@ function Widget (props) {
 	const [data, setData] = useState(null);
 	const [settingsDialogOpen, setSettingsDialogOpen] = useState(false);
 	const [queryMetadata, setQueryMetadata] = useState();
+	const { variables } = props;
 	useEffect(() => {
 		if (queryMetadata) {
 			QueryService.execute(expandMetadata(queryMetadata)).then(setData);
 		}
-	}, [queryMetadata]);
+	}, [queryMetadata, variables]);
 	const component = create(type, { data });
 	return (
 		<div className={classes.item}>
@@ -59,11 +62,13 @@ function Widget (props) {
 				mapping={mapping}
 				open={settingsDialogOpen}
 				onClose={() => setSettingsDialogOpen(false)}
-				onApply={(datasource) => setQueryMetadata(datasource)}/>
+				onApply={(datasource) => setQueryMetadata(datasource)}
+				variables={props.variables}/>
 		</div>);
 
 	function expandMetadata (metadata) {
 		metadata.mapping.type = mapping.type;
+
 		return metadata;
 	}
 }
@@ -73,4 +78,8 @@ Widget.propTypes = {
 	component: PropTypes.element
 };
 
-export default Widget;
+export default connect(
+	(state) => ({
+		variables: state.variable.variables
+	})
+)(Widget);

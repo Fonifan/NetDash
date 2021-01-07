@@ -3,7 +3,7 @@ import { ResponsivePie } from '@nivo/pie';
 
 function PieChart (props) {
 	let { data } = props;
-	if (data === null) {
+	if (!data) {
 		data = [
 			{
 				id: 'a',
@@ -26,7 +26,7 @@ function PieChart (props) {
 		<ResponsivePie
 			data={data}
 			margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-			colors={{ scheme: 'nivo' }}
+			colors={{ scheme: 'set1' }}
 			slicesLabelsSkipAngle={10}
 			animate={true}
 		/>);

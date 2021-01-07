@@ -24,7 +24,13 @@
 	"rules": {
 		"indent": [
 			"error",
-			"tab"
+			"tab",
+			{
+				"ignoredNodes": [
+					"JSXElement *",
+					"JSXElement"
+				]
+			}
 		],
 		"no-tabs": 0,
 		"semi": [
@@ -41,6 +47,10 @@
 		"jsx-quotes": [
 			2,
 			"prefer-single"
+		],
+		"react/jsx-indent-props": [
+			"error",
+			"tab"
 		]
 	}
 }

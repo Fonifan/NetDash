@@ -4,7 +4,7 @@ import { ResponsiveLine } from '@nivo/line';
 function LineChart (props) {
 	let { data } = props;
 
-	if (data === null) {
+	if (!data) {
 		data = [
 			{
 				id: 'japan',
@@ -45,7 +45,7 @@ function LineChart (props) {
 				bottom: 80,
 				left: 80
 			}}
-			colors={{ scheme: 'nivo' }}
+			colors={{ scheme: 'set1' }}
 			slicesLabelsSkipAngle={10}
 			animate={true}
 			useMesh={true}

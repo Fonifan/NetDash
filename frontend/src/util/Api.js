@@ -18,6 +18,14 @@ class Api {
 			}
 		}).then((response) => response.json());
 	}
+
+	static postForm (url, form) {
+		const queryUrl = serverUrl + url;
+		return fetch(queryUrl, {
+			method: 'POST',
+			body: form
+		}).then((response) => response.json());
+	}
 }
 
 export default Api;

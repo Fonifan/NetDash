@@ -3,7 +3,7 @@ import { ResponsiveWaffle } from '@nivo/waffle';
 
 function WaffleChart (props) {
 	let { data } = props;
-	if (data === null) {
+	if (!data) {
 		data = [
 			{
 				id: 'a',
@@ -38,7 +38,7 @@ function WaffleChart (props) {
 			total={total}
 			rows={18}
 			columns={14}
-			colors={{ scheme: 'nivo' }}
+			colors={{ scheme: 'set1' }}
 			animate={true}
 		/>);
 }

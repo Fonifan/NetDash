@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { Dashboard } from './dashboard/Dashboard';
 import { createUseStyles } from 'react-jss';
 import {
 	Switch,
@@ -10,7 +9,8 @@ import {
 } from 'react-router-dom';
 import NavigationBar from './navigation/NavigationBar';
 import DatasourcePresenter from './datasources/DatasourcePresenter';
-import HousePresenter from './house/HousePresenter';
+import HomePresenter from './home/HomePresenter';
+import ConversationDashboard from './conversation/ConverastionDashboard';
 
 const useStyles = createUseStyles({
 	app: {
@@ -19,12 +19,6 @@ const useStyles = createUseStyles({
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'nowrap'
-	},
-	content: {
-		flexGrow: 9,
-		padding: '10px',
-		height: '95vh',
-		width: '100%'
 	},
 	navBar: {
 		flexGrow: 1
@@ -37,20 +31,17 @@ function App () {
 		<div className={classes.app}>
 			<Router>
 				<NavigationBar className={classes.navBar}/>
-
-				<div className={classes.content}>
-					<Switch>
-						<Route path='/datasources'>
-							<DatasourcePresenter/>
-						</Route>
-						<Route path='/dashboard'>
-							<Dashboard/>
-						</Route>
-						<Route path='/'>
-							<HousePresenter/>
-						</Route>
-					</Switch>
-				</div>
+				<Switch>
+					<Route path='/datasources'>
+						<DatasourcePresenter/>
+					</Route>
+					<Route path='/dashboard/conversation'>
+						<ConversationDashboard/>
+					</Route>
+					<Route path='/'>
+						<HomePresenter/>
+					</Route>
+				</Switch>
 			</Router>
 		</div>
 

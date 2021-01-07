@@ -1,10 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import dashboardReducer from './dashboard/state/DashboardReducer';
 import datasourceReducer from './datasources/state/DatasourceReducer';
+import variableReducer from './variable/state/VariableReducer';
 
 const rootReducer = combineReducers({
-	dashboard: dashboardReducer,
-	datasource: datasourceReducer
+	datasource: datasourceReducer,
+	variable: variableReducer
 });
 
 const store = configureStore({

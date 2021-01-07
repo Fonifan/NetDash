@@ -20,13 +20,14 @@ const useStyles = createUseStyles({
 });
 
 function DatasourceItemPresenter (props) {
-	const { name, type } = props;
+	const { id } = props;
 	const classes = useStyles();
+
 	return (
 		<div className={classes.presenter}>
 			<div className={classes.content}>
-				<h2>{name}</h2>
-				<p>{type}</p>
+				<h2>{id}</h2>
+				<p>Packets: {props.data.length}</p>
 			</div>
 			<div className={classes.buttons} >
 				<IconButton>

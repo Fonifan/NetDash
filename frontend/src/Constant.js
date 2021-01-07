@@ -12,4 +12,9 @@ const MapperName = {
 	LINE_CHART: 'lineChart'
 };
 
-export { CellSize, WidgetName, MapperName };
+const VariableName = {
+	START_DATE: 'startDate',
+	END_DATE: 'endDate'
+};
+
+export { CellSize, WidgetName, MapperName, VariableName };

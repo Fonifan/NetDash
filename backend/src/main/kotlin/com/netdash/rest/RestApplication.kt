@@ -8,9 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 
 @SpringBootApplication
-class RestApplication {
+open class RestApplication {
     @Bean
-    fun corsConfigurer(): WebMvcConfigurer {
+    open fun corsConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
                 registry.addMapping("/api/**").allowedOrigins("http://localhost:3000")
@@ -21,7 +21,6 @@ class RestApplication {
 
 fun main(args: Array<String>) {
     runApplication<RestApplication>(*args)
-
 }
 
 
