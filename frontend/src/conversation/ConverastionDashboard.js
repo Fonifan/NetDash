@@ -4,6 +4,7 @@ import ConversationWidgetGrid from './ConversationWidgetGrid';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import DataService from '../data/service/DataService';
+import DataRepository from '../data/repository/DataRepository';
 
 const useStyles = createUseStyles({
 	dashboard: {
@@ -34,7 +35,7 @@ function ConversationDashboard (props) {
 	const dataService = new DataService(selectedDatasource, variables);
 
 	const onSelectDatasource = (id) => {
-		setSelectedDatasource(datasources[id].data);
+		setSelectedDatasource(DataRepository.get(id));
 	};
 
 	return (

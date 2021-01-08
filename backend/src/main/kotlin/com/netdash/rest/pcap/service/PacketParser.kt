@@ -88,6 +88,6 @@ class PacketParser : JPacketHandler<StringBuilder> {
     }
 
     fun getData(): PcapData {
-        return PcapData(data)
+        return PcapData(data.sortedBy { it.packetTime })
     }
 }

@@ -10,7 +10,7 @@ class DataService {
 	}
 
 	getTimeLine () {
-		const bucketLengthMs = 5000;
+		const bucketLengthMs = 10000;
 		if (!this.data) {
 			return [];
 		}

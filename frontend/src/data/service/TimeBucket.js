@@ -7,12 +7,11 @@ function makeBuckets (data, length) {
 		x,
 		y
 	}) => {
-		const date = x;
-		if (date <= startPoint + length) {
+		if (x <= startPoint + length) {
 			aggregate += y;
 		} else {
 			pushBucket(startPoint, aggregate);
-			startPoint = date;
+			startPoint = x;
 			aggregate = y;
 		}
 	});

@@ -7,11 +7,12 @@ class Filter {
 	filter (data) {
 		const checks = this._getTimeChecks();
 		return data.filter((element) => {
-			let passed = true;
 			for (let i = 0; i < checks.length; i++) {
-				passed = checks[i](element);
+				if (!checks[i](element)) {
+					return false;
+				}
 			}
-			return passed;
+			return true;
 		});
 	}
 
@@ -19,10 +20,14 @@ class Filter {
 		const checks = [];
 
 		if (this.startDate) {
-			checks.push((element) => element.packetTime >= this.startDate);
+			checks.push((element) => {
+				return element.packetTime >= this.startDate;
+			});
 		}
 		if (this.endDate) {
-			checks.push((element) => element.packetTime <= this.endDate);
+			checks.push((element) => {
+				return element.packetTime <= this.endDate;
+			});
 		}
 
 		return checks;

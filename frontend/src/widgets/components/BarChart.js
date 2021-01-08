@@ -37,6 +37,7 @@ function BarChart (props) {
 			}}
 			colors={{ scheme: 'set1' }}
 			animate={true}
+			axisBottom={null}
 		/>);
 }
 

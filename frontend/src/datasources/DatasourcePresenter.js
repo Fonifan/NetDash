@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { addDatasource, setDatasources } from './state/DatasourceAction';
 import { createUseStyles } from 'react-jss';
 import PcapApi from '../pcap/service/PcapApi';
+import DataRepository from '../data/repository/DataRepository';
 
 const useStyles = createUseStyles({
 	toolBar: {
@@ -31,7 +32,9 @@ function DatasourcePresenter (props) {
 		const formData = new FormData();
 		formData.append('file', datasource.file);
 		PcapApi.add(formData).then((pcap) => {
-			addDatasource({ datasource: { id: datasource.file.name, data: pcap.data } });
+			const name = datasource.file.name;
+			DataRepository.add({ id: name, data: pcap.data });
+			addDatasource({ datasource: { id: name, length: pcap.data.length } });
 		});
 	};
 	return (
@@ -44,12 +47,10 @@ function DatasourcePresenter (props) {
 				</Button>
 			</div>
 			<List>
-				{datasources ? Object.keys(datasources).map(key => {
-					const datasource = datasources[key];
-
+				{datasources ? Object.keys(datasources).map((key) => {
 					return (
 						<ListItem divider key={key}>
-							<DatasourceItemPresenter {...datasource}/>
+							<DatasourceItemPresenter metadata={datasources[key]}/>
 						</ListItem>);
 				}) : null}
 			</List>
