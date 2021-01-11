@@ -36,18 +36,18 @@ const useStyles = createUseStyles({
 
 function ConversationWidgetGrid (props) {
 	const classes = useStyles();
-	const { totalSourceOctetsBarChart, totalDestinationOctetsBarChart } = props.dataMap;
+	const { totalSourceOctets, totalDestinationOctets, octetsByIp } = props.dataMap;
 
 	return (
 		<div className={classes.grid}>
 			<div className={classes.line}>
-				<LineChart/>
+				<LineChart data={octetsByIp}/>
 			</div>
 			<div className={classes.bar}>
-				<BarChart data={totalSourceOctetsBarChart}/>
+				<BarChart data={totalSourceOctets}/>
 			</div>
 			<div className={classes.barSecond}>
-				<BarChart data={totalDestinationOctetsBarChart}/>
+				<BarChart data={totalDestinationOctets}/>
 			</div>
 
 		</div>

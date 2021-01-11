@@ -1,18 +1,16 @@
-function makeBuckets (data, length) {
+function makeBuckets (data, map, length) {
+	const { label, value } = map;
 	const bucketizedData = [];
-	let startPoint = data[0].x;
+	let startPoint = data[0][label];
 	let aggregate = 0;
 
-	data.forEach(({
-		x,
-		y
-	}) => {
-		if (x <= startPoint + length) {
-			aggregate += y;
+	data.forEach((element) => {
+		if (element[label] <= startPoint + length) {
+			aggregate += element[value];
 		} else {
 			pushBucket(startPoint, aggregate);
-			startPoint = x;
-			aggregate = y;
+			startPoint = element[label];
+			aggregate = element[value];
 		}
 	});
 
@@ -22,8 +20,8 @@ function makeBuckets (data, length) {
 
 	function pushBucket (time, aggregate) {
 		bucketizedData.push({
-			x: time,
-			y: aggregate
+			[label]: time,
+			[value]: aggregate
 		});
 	}
 }

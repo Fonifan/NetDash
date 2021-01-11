@@ -13,14 +13,28 @@ const useStyles = createUseStyles({
 });
 
 const dataMap = {
-	totalSourceOctetsBarChart: {
+	totalSourceOctets: {
 		id: 'sourceIp',
 		value: 'octets'
 	},
 
-	totalDestinationOctetsBarChart: {
+	totalDestinationOctets: {
 		id: 'destinationIp',
 		value: 'octets'
+	},
+	octetsByIp: {
+		id: 'sourceIp',
+		x: 'packetTime',
+		y: 'octets'
+	}
+};
+
+const metadataMap = {
+	octetsByIpLineChart: {
+		bucket: {
+			label: 'x',
+			value: 'y'
+		}
 	}
 };
 
@@ -40,7 +54,7 @@ function ConversationDashboard (props) {
 
 	return (
 		<div className={classes.dashboard}>
-			<ConversationWidgetGrid dataMap={dataService.getData(dataMap)} />
+			<ConversationWidgetGrid dataMap={dataService.getData(dataMap, metadataMap)} />
 			<ControlPanel
 				height={200}
 				width={500}

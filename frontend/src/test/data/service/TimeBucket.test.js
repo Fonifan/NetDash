@@ -39,5 +39,5 @@ const expectedData = [
 ];
 
 test('Test time bucketing', () => {
-	expect(makeBuckets(data, bucketLength)).toStrictEqual(expectedData);
+	expect(makeBuckets(data, { label: 'x', value: 'y' }, bucketLength)).toStrictEqual(expectedData);
 });

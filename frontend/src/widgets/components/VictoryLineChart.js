@@ -4,32 +4,36 @@ import { VictoryTheme } from 'victory-core';
 
 const templateData = [
 	{
-		x: 0,
-		y: 0
-	},
-	{
-		x: 1,
-		y: 1
-	},
-	{
-		x: 2,
-		y: 4
-	},
-	{
-		x: 3,
-		y: 9
-	},
-	{
-		x: 4,
-		y: 16
-	},
-	{
-		x: 5,
-		y: 25
-	},
-	{
-		x: 6,
-		y: 36
+		id: 'template',
+		data: [
+			{
+				x: 0,
+				y: 0
+			},
+			{
+				x: 1,
+				y: 1
+			},
+			{
+				x: 2,
+				y: 4
+			},
+			{
+				x: 3,
+				y: 9
+			},
+			{
+				x: 4,
+				y: 16
+			},
+			{
+				x: 5,
+				y: 25
+			},
+			{
+				x: 6,
+				y: 36
+			}]
 	}
 ];
 
@@ -49,15 +53,20 @@ function VictoryLineChart (props) {
 			}}
 			containerComponent={<VictoryVoronoiContainer/>}
 		>
-			<VictoryLine
-				data={data}
-				style={{
-					data: { stroke: 'tomato' }
-				}}
-				samples={100}
-				labels={({ datum }) => `x:${datum.x}\ny:${datum.y}`}
-				labelComponent={<VictoryTooltip/>}
-			/>
+			{
+				data.map((element) =>
+					<VictoryLine
+						key={element.id}
+						data={element.data}
+						style={{
+							data: { stroke: 'tomato' }
+						}}
+						samples={100}
+						labels={({ datum }) => `x:${datum.x}\ny:${datum.y}`}
+						labelComponent={<VictoryTooltip/>}
+					/>
+				)
+			}
 		</VictoryChart>);
 }
 

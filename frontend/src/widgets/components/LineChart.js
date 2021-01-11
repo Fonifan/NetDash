@@ -47,7 +47,7 @@ function LineChart (props) {
 			}}
 			colors={{ scheme: 'set1' }}
 			slicesLabelsSkipAngle={10}
-			animate={true}
+			animate={false}
 			useMesh={true}
 			legends={[
 				{
@@ -65,6 +65,9 @@ function LineChart (props) {
 					symbolShape: 'circle'
 				}
 			]}
+			axisBottom={{
+				tickRotation: 90
+			}}
 		/>);
 }
 
