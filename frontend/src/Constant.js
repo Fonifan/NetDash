@@ -17,4 +17,10 @@ const VariableName = {
 	END_DATE: 'endDate'
 };
 
-export { CellSize, WidgetName, MapperName, VariableName };
+const HostPath = {
+	API: process.env.REACT_APP_HOST_PATH
+		? process.env.REACT_APP_HOST_PATH + '/api/'
+		: 'http://localhost:8080/api/'
+};
+
+export { CellSize, WidgetName, MapperName, VariableName, HostPath };

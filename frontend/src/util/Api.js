@@ -1,15 +1,15 @@
-const serverUrl = 'http://localhost:8080/api/';
+import { HostPath } from '../Constant';
 
 class Api {
 	static get (url) {
-		const queryUrl = serverUrl + url;
+		const queryUrl = HostPath.API + url;
 		return fetch(queryUrl, {
 			method: 'GET'
 		}).then((response) => response.json());
 	}
 
 	static post (url, body) {
-		const queryUrl = serverUrl + url;
+		const queryUrl = HostPath.API + url;
 		return fetch(queryUrl, {
 			method: 'POST',
 			body: JSON.stringify(body),
@@ -20,7 +20,7 @@ class Api {
 	}
 
 	static postForm (url, form) {
-		const queryUrl = serverUrl + url;
+		const queryUrl = HostPath.API + url;
 		return fetch(queryUrl, {
 			method: 'POST',
 			body: form
