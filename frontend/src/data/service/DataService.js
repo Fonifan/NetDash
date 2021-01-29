@@ -1,4 +1,4 @@
-import makeBuckets from './TimeBucket';
+import TimeBucket from './TimeBucket';
 import TwoDimensionTransformer from './TwoDimensionTransformer';
 import Filter from './Filter';
 import ThreeDimensionTransformer from './ThreeDimensionTransformer';
@@ -6,38 +6,21 @@ import ThreeDimensionTransformer from './ThreeDimensionTransformer';
 class DataService {
 	constructor (data, variables) {
 		this.data = data;
-		if (!isDataSorted()) {
-			console.error('Data is not sorted', data);
-		}
 		this.startDate = variables.startDate;
 		this.endDate = variables.endDate;
 		this.bucketLengthMs = 10000;
-
-		function isDataSorted () {
-			if (!data) { return true; }
-			for (let i = 0; i < data.length - 1; i++) {
-				if (data[i].packetTime > data[i + 1].packetTime) {
-					return false;
-				}
-			}
-
-			return true;
-		}
 	}
 
 	getTimeLine () {
 		if (!this.data) {
 			return [];
 		}
-		const buckets = makeBuckets(
-			this.data,
-			{
-				label: 'packetTime',
-				value: 'octets'
-			},
-			this.bucketLengthMs);
+		const bucket = new TimeBucket(this.data, {
+			label: 'packetTime',
+			value: 'octets'
+		}, this.bucketLengthMs);
 
-		return buckets.map((element) => ({
+		return bucket.make().map((element) => ({
 			x: element.packetTime,
 			y: element.octets
 		}));
@@ -55,22 +38,24 @@ class DataService {
 			});
 			const filteredData = filter.filter(this.data);
 			const transformedData = this._getTransformer(dataMap[key], filteredData).transform();
-			this._applyMetadata(metadataMap[key], transformedData);
-			map[key] = transformedData;
+			map[key] = this._applyMetadata(metadataMap[key], transformedData);
 		});
 		return map;
 	}
 
 	_applyMetadata (map, data) {
 		if (map) {
-			this._bucketize(map.bucket, data);
+			return this._bucketize(map.bucket, data);
 		}
+		return data;
 	}
 
 	_bucketize (map, data) {
 		if (map) {
-			makeBuckets(data, map, this.bucketLengthMs);
+			return new TimeBucket(data, map, this.bucketLengthMs).make();
 		}
+
+		return data;
 	}
 
 	_getTransformer (map, data) {

@@ -1,4 +1,4 @@
-import makeBuckets from '../../../data/service/TimeBucket';
+import TimeBucket from '../../../data/service/TimeBucket';
 
 const bucketLength = 5000;
 const data = [
@@ -38,6 +38,16 @@ const expectedData = [
 	}
 ];
 
+const map = {
+	label: 'x',
+	value: 'y'
+};
+
 test('Test time bucketing', () => {
-	expect(makeBuckets(data, { label: 'x', value: 'y' }, bucketLength)).toStrictEqual(expectedData);
+	expect(new TimeBucket(data, map, bucketLength).make()).toStrictEqual(expectedData);
 });
+
+// test('All time buckets times are multiples of start bucket time', () => {
+// 	const buckets = new TimeBucket(data, map, bucketLength).make();
+// 	expect();
+// });

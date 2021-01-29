@@ -30,8 +30,8 @@ const dataMap = {
 };
 
 const metadataMap = {
-	octetsByIpLineChart: {
-		bucket: {
+	octetsByIp: {
+		syncBucket: {
 			label: 'x',
 			value: 'y'
 		}
