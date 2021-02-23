@@ -11,7 +11,7 @@ open class PcapParserService {
     fun parse(filePath: Path): PcapData {
         val errorBuffer = StringBuilder()
         val pcap = Pcap.openOffline(filePath.toString(), errorBuffer)
-        val packetParser = PacketParser()
+        val packetParser = PacketParser(filePath.fileName.toString())
         pcap.loop(Pcap.LOOP_INFINITE, packetParser, errorBuffer)
         pcap.close()
         return packetParser.getData()

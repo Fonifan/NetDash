@@ -4,6 +4,15 @@ build/
 !backend/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+.log14460
+*.dll
+*.so
+*.log*
+jnetpcap-1.4.r1425-1.linux64.x86_64/*
+gradlew*
+*.lock
+gradle/*
+package-lock.json
 
 ### STS ###
 .apt_generated
@@ -32,3 +41,4 @@ out/
 
 ### VS Code ###
 .vscode/
+

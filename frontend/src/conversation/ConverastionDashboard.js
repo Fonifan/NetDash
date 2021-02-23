@@ -30,12 +30,7 @@ const dataMap = {
 };
 
 const metadataMap = {
-	octetsByIp: {
-		syncBucket: {
-			label: 'x',
-			value: 'y'
-		}
-	}
+
 };
 
 function ConversationDashboard (props) {
