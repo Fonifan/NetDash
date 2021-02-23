@@ -5,7 +5,6 @@ import com.netdash.rest.pcap.model.PcapData
 import org.jnetpcap.packet.JPacket
 import org.jnetpcap.packet.JPacketHandler
 import org.jnetpcap.packet.format.FormatUtils
-import org.jnetpcap.protocol.lan.Ethernet
 import org.jnetpcap.protocol.network.Arp
 import org.jnetpcap.protocol.network.Icmp
 import org.jnetpcap.protocol.network.Ip4
@@ -14,7 +13,7 @@ import org.jnetpcap.protocol.tcpip.Tcp
 import org.jnetpcap.protocol.tcpip.Udp
 
 
-class PacketParser : JPacketHandler<StringBuilder> {
+class PacketParser(private val name: String) : JPacketHandler<StringBuilder> {
     private val data: MutableList<ConsumedPacket> = mutableListOf()
     private var unknownPackets = 0
     override fun nextPacket(packet: JPacket?, errorBuffer: StringBuilder?) {
@@ -88,6 +87,6 @@ class PacketParser : JPacketHandler<StringBuilder> {
     }
 
     fun getData(): PcapData {
-        return PcapData(data.sortedBy { it.packetTime })
+        return PcapData(name, data)
     }
 }
