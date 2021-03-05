@@ -11,12 +11,21 @@ import java.sql.PreparedStatement
 @Repository
 //TODO: use all return values for error checking
 open class JdbcPcapRepository(
-    @Autowired val jdbcTemplate: JdbcTemplate
+    @Autowired val jdbcTemplate: JdbcTemplate,
 ) : PcapRepository {
     private val defaultBucketSize = 1000
 
-    override fun findByName(name: String): PcapData {
-        return PcapData(name, jdbcTemplate.query("select * from $PCAP_TABLE where name='$name'", PcapRowMapper()).toList())
+    override fun findByName(name: String, bucketized: Boolean): PcapData? {
+        val queryString = when (bucketized) {
+            true -> "select * from \"pcap_${name}_bucket\""
+            false -> "select * from \"pcap_$name\""
+        }
+
+        val data = jdbcTemplate.query(queryString, PcapRowMapper()).toList()
+        if (data.isEmpty())
+            return null
+
+        return PcapData(name, data)
     }
 
     override fun save(pcapData: PcapData) {
@@ -40,14 +49,14 @@ open class JdbcPcapRepository(
 
         jdbcTemplate.execute(
             "create materialized view \"${newTableName + "_bucket"}\" as\n" +
-                "        select sourceip, destinationip, sourceport, destinationport, pt as packettime, protocol, sum as octets, name\n" +
-                "          from (\n" +
-                "              select sourceip, destinationip, sourceport, destinationport, time_bucket($defaultBucketSize, packettime) as pt, protocol,\n" +
-                "                     sum(octets), name\n" +
-                "                from \"$newTableName\"\n" +
-                "               group by sourceip, destinationip, sourceport, destinationport, pt, protocol, name\n" +
-                "               order by pt\n" +
-                "          ) as sub")
+                    "        select sourceip, destinationip, sourceport, destinationport, pt as packettime, protocol, sum as octets, name\n" +
+                    "          from (\n" +
+                    "              select sourceip, destinationip, sourceport, destinationport, time_bucket($defaultBucketSize, packettime) as pt, protocol,\n" +
+                    "                     sum(octets), name\n" +
+                    "                from \"$newTableName\"\n" +
+                    "               group by sourceip, destinationip, sourceport, destinationport, pt, protocol, name\n" +
+                    "               order by pt\n" +
+                    "          ) as sub")
     }
 
     override fun delete(name: String): Boolean {
