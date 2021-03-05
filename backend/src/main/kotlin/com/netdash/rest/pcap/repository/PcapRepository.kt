@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PcapRepository {
     fun findByName(name: String, bucketized: Boolean): PcapData?
-    
+  
     fun save(pcapData: PcapData)
 
     fun delete(name: String): Boolean
