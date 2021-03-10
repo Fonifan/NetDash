@@ -1,7 +1,7 @@
-package com.netdash.rest.transformer.service.bar
+package com.netdash.rest.data.transformer.service.bar
 
-import com.netdash.rest.pcap.model.PcapData
-import com.netdash.rest.transformer.service.Transformer
+import com.netdash.rest.data.transformer.service.Transformer
+import com.netdash.rest.pcap.model.Data
 
 class BarTransformer(
     private val aggregator: String,
@@ -11,11 +11,11 @@ class BarTransformer(
     Transformer {
     private val collector: MutableMap<String, MutableMap<String, String>> = HashMap()
 
-    override fun transform(pcapData: PcapData): BarTransformedData {
-        pcapData.data.forEach { packet ->
-            val aggregatorValue = packet.get(aggregator)
-            val qualifierValue = packet.get(qualifier)
-            val quantifierValue = packet.get(quantifier)
+    override fun transform(data: Data): BarTransformedData {
+        data.get().forEach { row ->
+            val aggregatorValue = row[aggregator].toString()
+            val qualifierValue = row[qualifier].toString()
+            val quantifierValue = row[quantifier].toString()
 
             if (!collector.containsKey(aggregatorValue)) {
                 collector[aggregatorValue] = HashMap()
@@ -30,6 +30,10 @@ class BarTransformer(
     }
 
     private fun collectData(): BarTransformedData {
-        return BarTransformedData(collector)
+        return BarTransformedData(
+            collector.map { entry ->
+                mapOf(entry.key to entry.value)
+            }.toList()
+        )
     }
 }

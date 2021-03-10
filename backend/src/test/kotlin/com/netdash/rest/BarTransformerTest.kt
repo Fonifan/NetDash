@@ -2,8 +2,8 @@ package com.netdash.rest
 
 import com.netdash.rest.pcap.model.ConsumedPacket
 import com.netdash.rest.pcap.model.PcapData
-import com.netdash.rest.transformer.service.bar.BarTransformedData
-import com.netdash.rest.transformer.service.bar.BarTransformer
+import com.netdash.rest.data.transformer.service.bar.BarTransformedData
+import com.netdash.rest.data.transformer.service.flat.BarTransformer
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 

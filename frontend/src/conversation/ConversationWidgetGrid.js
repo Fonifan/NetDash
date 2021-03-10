@@ -41,7 +41,7 @@ function ConversationWidgetGrid (props) {
 	return (
 		<div className={classes.grid}>
 			<div className={classes.line}>
-				<LineChart data={octetsByIp}/>
+				<BarChart data={octetsByIp}/>
 			</div>
 			<div className={classes.bar}>
 				<BarChart data={totalSourceOctets}/>

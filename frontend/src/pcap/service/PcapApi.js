@@ -2,10 +2,10 @@ import Api from '../../util/Api';
 
 const pcapUrl = 'pcap';
 
-class DatasourceApi {
+class PcapApi {
 	static add (pcap) {
 		return Api.postForm(pcapUrl, pcap);
 	}
 }
 
-export default DatasourceApi;
+export default PcapApi;

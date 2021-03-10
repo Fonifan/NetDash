@@ -51,6 +51,9 @@
 		"react/jsx-indent-props": [
 			"error",
 			"tab"
+		],
+		"react/prop-types": [
+			"warn"
 		]
 	}
 }

@@ -1,5 +1,7 @@
 package com.netdash.rest.pcap.repository
 
+import com.netdash.rest.data.transformer.model.DataMap
+import com.netdash.rest.pcap.model.DynamicPcapData
 import com.netdash.rest.pcap.model.PcapData
 import com.netdash.rest.pcap.repository.PcapRepository.Companion.PCAP_TABLE
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,12 +18,7 @@ open class JdbcPcapRepository(
     private val defaultBucketSize = 1000
 
     override fun findByName(name: String, bucketized: Boolean): PcapData? {
-        val queryString = when (bucketized) {
-            true -> "select * from \"pcap_${name}_bucket\""
-            false -> "select * from \"pcap_$name\""
-        }
-
-        val data = jdbcTemplate.query(queryString, PcapRowMapper()).toList()
+        val data = jdbcTemplate.query("select * from ${preparePcapTableName(name, bucketized)}", PcapRowMapper()).toList()
         if (data.isEmpty())
             return null
 
@@ -61,6 +58,26 @@ open class JdbcPcapRepository(
 
     override fun delete(name: String): Boolean {
         return jdbcTemplate.update("drop table ${PCAP_TABLE}_${name}") == 1
+    }
+
+    override fun executeQuery(
+        pcapName: String,
+        bucketized: Boolean,
+        query: String,
+        dataMap: DataMap,
+    ): DynamicPcapData? {
+        val preparedQuery = query.replaceFirst(":pcapName", preparePcapTableName(pcapName, bucketized))
+
+        val data = jdbcTemplate.query(preparedQuery, DynamicRowMapper(dataMap)).toList()
+
+        if (data.isEmpty())
+            return null
+
+        return DynamicPcapData(data)
+    }
+
+    private fun preparePcapTableName(pcapName: String, bucketized: Boolean): String {
+        return if (bucketized) "\"pcap_${pcapName}_bucket\"" else "\"pcap_$pcapName\""
     }
 }
 

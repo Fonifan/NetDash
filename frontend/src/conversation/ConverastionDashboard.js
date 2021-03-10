@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ControlPanel from '../control/ControlPanel';
 import ConversationWidgetGrid from './ConversationWidgetGrid';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
-import DataService from '../data/service/DataService';
-import DataRepository from '../data/repository/DataRepository';
+import DataService from '../data/DataService';
 
 const useStyles = createUseStyles({
 	dashboard: {
@@ -12,49 +11,49 @@ const useStyles = createUseStyles({
 	}
 });
 
-const dataMap = {
-	totalSourceOctets: {
-		id: 'sourceIp',
-		value: 'octets'
-	},
-
-	totalDestinationOctets: {
-		id: 'destinationIp',
-		value: 'octets'
-	},
+const metaData = {
 	octetsByIp: {
-		id: 'sourceIp',
-		x: 'packetTime',
-		y: 'octets'
+		bucketized: true,
+		type: 'bar',
+		mapping: {
+			aggregator: 'packetTime',
+			qualifier: 'sourceIp',
+			quantifier: 'octets'
+		}
 	}
-};
-
-const metadataMap = {
-
 };
 
 function ConversationDashboard (props) {
 	const classes = useStyles();
 	const {
-		datasources,
-		variables
+		datasources
 	} = props;
 
 	const [selectedDatasource, setSelectedDatasource] = useState();
-	const dataService = new DataService(selectedDatasource, variables);
+	const [dataService, setDataService] = useState(new DataService());
 
-	const onSelectDatasource = (id) => {
-		setSelectedDatasource(DataRepository.get(id));
+	useEffect(() => {
+		if (dataService) {
+			dataService.close();
+		}
+		setDataService(new DataService(selectedDatasource));
+
+		return () => {
+			dataService.close();
+		};
+	}, [selectedDatasource]);
+	const onSelectDatasource = (name) => {
+		setSelectedDatasource(name);
 	};
 
 	return (
 		<div className={classes.dashboard}>
-			<ConversationWidgetGrid dataMap={dataService.getData(dataMap, metadataMap)} />
+			<ConversationWidgetGrid dataMap={dataService.getBatch(metaData)}/>
 			<ControlPanel
 				height={200}
 				width={500}
 				onSetSelectedDatasource={onSelectDatasource}
-				data={dataService.getTimeLine()}
+				data={dataService.getOverall()}
 				datasources={datasources}
 			/>
 		</div>);
