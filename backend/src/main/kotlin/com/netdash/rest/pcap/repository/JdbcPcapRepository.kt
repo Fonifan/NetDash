@@ -1,7 +1,7 @@
 package com.netdash.rest.pcap.repository
 
 import com.netdash.rest.data.transformer.model.DataMap
-import com.netdash.rest.pcap.model.DynamicPcapData
+import com.netdash.rest.pcap.model.Data
 import com.netdash.rest.pcap.model.PcapData
 import com.netdash.rest.pcap.repository.PcapRepository.Companion.PCAP_TABLE
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,18 +28,18 @@ open class JdbcPcapRepository(
     override fun save(pcapData: PcapData) {
         jdbcTemplate.batchUpdate("insert into $PCAP_TABLE values(?,?,?,?,?,?,?,?)", object : BatchPreparedStatementSetter {
             override fun setValues(preparedStatement: PreparedStatement, i: Int) {
-                preparedStatement.setString(1, pcapData.data[i].sourceIp)
-                preparedStatement.setString(2, pcapData.data[i].destinationIp)
-                preparedStatement.setInt(3, pcapData.data[i].sourcePort)
-                preparedStatement.setInt(4, pcapData.data[i].destinationPort)
-                preparedStatement.setLong(5, pcapData.data[i].packetTime)
-                preparedStatement.setString(6, pcapData.data[i].protocol)
-                preparedStatement.setInt(7, pcapData.data[i].octets)
+                preparedStatement.setString(1, pcapData.pcapData[i].sourceIp)
+                preparedStatement.setString(2, pcapData.pcapData[i].destinationIp)
+                preparedStatement.setInt(3, pcapData.pcapData[i].sourcePort)
+                preparedStatement.setInt(4, pcapData.pcapData[i].destinationPort)
+                preparedStatement.setLong(5, pcapData.pcapData[i].packetTime)
+                preparedStatement.setString(6, pcapData.pcapData[i].protocol)
+                preparedStatement.setInt(7, pcapData.pcapData[i].octets)
                 preparedStatement.setString(8, pcapData.name)
             }
 
             override fun getBatchSize(): Int {
-                return pcapData.data.size
+                return pcapData.pcapData.size
             }
         })
         val newTableName = PCAP_TABLE + "_" + pcapData.name
@@ -65,7 +65,7 @@ open class JdbcPcapRepository(
         bucketized: Boolean,
         query: String,
         dataMap: DataMap,
-    ): DynamicPcapData? {
+    ): Data? {
         val preparedQuery = query.replaceFirst(":pcapName", preparePcapTableName(pcapName, bucketized))
 
         val data = jdbcTemplate.query(preparedQuery, DynamicRowMapper(dataMap)).toList()
@@ -73,7 +73,7 @@ open class JdbcPcapRepository(
         if (data.isEmpty())
             return null
 
-        return DynamicPcapData(data)
+        return Data(data.map { dynamicPacket -> dynamicPacket.data })
     }
 
     private fun preparePcapTableName(pcapName: String, bucketized: Boolean): String {

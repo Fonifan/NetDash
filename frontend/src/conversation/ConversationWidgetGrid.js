@@ -14,21 +14,27 @@ const useStyles = createUseStyles({
 		gridTemplateColumns: `repeat(${fractionAmount}, 1fr)`,
 		gridTemplateRows: `repeat(${fractionAmount}, 1fr)`
 	},
-	line: {
+	totalSourceOctets: {
 		gridRowStart: 1,
-		gridRowEnd: 7,
+		gridRowEnd: 6,
 		gridColumnStart: 1,
 		gridColumnEnd: 7
 	},
-	bar: {
-		gridRowStart: 1,
-		gridRowEnd: 6,
+	totalDestinationOctets: {
+		gridRowStart: 6,
+		gridRowEnd: 11,
+		gridColumnStart: 1,
+		gridColumnEnd: 7
+	},
+	octetsByProtocol: {
+		gridRowStart: 6,
+		gridRowEnd: 11,
 		gridColumnStart: 7,
 		gridColumnEnd: 11
 	},
-	barSecond: {
-		gridRowStart: 6,
-		gridRowEnd: 11,
+	packetsBySourceIp: {
+		gridRowStart: 1,
+		gridRowEnd: 6,
 		gridColumnStart: 7,
 		gridColumnEnd: 11
 	}
@@ -36,20 +42,22 @@ const useStyles = createUseStyles({
 
 function ConversationWidgetGrid (props) {
 	const classes = useStyles();
-	const { totalSourceOctets, totalDestinationOctets, octetsByIp } = props.dataMap;
+	const { totalSourceOctets, totalDestinationOctets, octetsByProtocol, packetsBySourceIp } = props.dataMap;
 
 	return (
 		<div className={classes.grid}>
-			<div className={classes.line}>
-				<BarChart data={octetsByIp}/>
-			</div>
-			<div className={classes.bar}>
+			<div className={classes.totalSourceOctets}>
 				<BarChart data={totalSourceOctets}/>
 			</div>
-			<div className={classes.barSecond}>
+			<div className={classes.totalDestinationOctets}>
 				<BarChart data={totalDestinationOctets}/>
 			</div>
-
+			<div className={classes.octetsByProtocol}>
+				<BarChart data={octetsByProtocol}/>
+			</div>
+			<div className={classes.packetsBySourceIp}>
+				<BarChart data={packetsBySourceIp}/>
+			</div>
 		</div>
 	);
 };

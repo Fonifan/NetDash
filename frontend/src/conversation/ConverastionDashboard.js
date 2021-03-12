@@ -12,13 +12,63 @@ const useStyles = createUseStyles({
 });
 
 const metaData = {
-	octetsByIp: {
-		bucketized: true,
-		type: 'bar',
-		mapping: {
-			aggregator: 'packetTime',
-			qualifier: 'sourceIp',
-			quantifier: 'octets'
+	metaDataMap: {
+		overall: {
+			bucketized: true,
+			type: 'flat',
+			mapping: {
+				qualifier: 'x',
+				quantifier: 'y'
+			},
+			query: 'select packettime as x, sum(octets) as y from :pcapName group by packettime order by packettime'
+		},
+		totalDestinationOctets: {
+			bucketized: true,
+			type: 'flat',
+			mapping: {
+				qualifier: 'id',
+				quantifier: 'value'
+			},
+			query: 'select sum(octets) as value, destinationip as id\n' +
+				'  from :pcapName\n' +
+				' group by id\n' +
+				' order by value desc'
+		},
+		totalSourceOctets: {
+			bucketized: true,
+			type: 'flat',
+			mapping: {
+				qualifier: 'id',
+				quantifier: 'value'
+			},
+			query: 'select sum(octets) as value, sourceip as id\n' +
+				'  from :pcapName\n' +
+				' group by id\n' +
+				' order by value desc'
+		},
+		octetsByProtocol: {
+			bucketized: true,
+			type: 'flat',
+			mapping: {
+				qualifier: 'id',
+				quantifier: 'value'
+			},
+			query: 'select sum(octets) as value, protocol as id\n' +
+				'  from :pcapName\n' +
+				' group by id\n' +
+				' order by value desc'
+		},
+		packetsBySourceIp: {
+			bucketized: true,
+			type: 'flat',
+			mapping: {
+				qualifier: 'id',
+				quantifier: 'value'
+			},
+			query: 'select count(*) as value, sourceip as id\n' +
+				'  from :pcapName\n' +
+				' group by id\n' +
+				' order by value desc'
 		}
 	}
 };
@@ -30,30 +80,28 @@ function ConversationDashboard (props) {
 	} = props;
 
 	const [selectedDatasource, setSelectedDatasource] = useState();
-	const [dataService, setDataService] = useState(new DataService());
+	const [dataMap, setDataMap] = useState({
+		overall: [],
+		octetsByProtocol: [],
+		totalSourceOctets: [],
+		packetsBySourceIp: [],
+		totalDestinationOctets: []
+	});
 
-	useEffect(() => {
-		if (dataService) {
-			dataService.close();
-		}
-		setDataService(new DataService(selectedDatasource));
-
-		return () => {
-			dataService.close();
-		};
-	}, [selectedDatasource]);
 	const onSelectDatasource = (name) => {
+		const dataService = new DataService(name);
 		setSelectedDatasource(name);
+		dataService.getBatch(metaData).then(setDataMap);
 	};
 
 	return (
 		<div className={classes.dashboard}>
-			<ConversationWidgetGrid dataMap={dataService.getBatch(metaData)}/>
+			<ConversationWidgetGrid dataMap={dataMap}/>
 			<ControlPanel
 				height={200}
 				width={500}
 				onSetSelectedDatasource={onSelectDatasource}
-				data={dataService.getOverall()}
+				data={dataMap.overall}
 				datasources={datasources}
 			/>
 		</div>);

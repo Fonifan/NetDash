@@ -24,6 +24,6 @@ class PcapParserResource(
         val pcapData = pcapParserService.parse(path)
         pcapRepository.save(pcapData)
         fileService.delete(path)
-        return ResponseEntity.ok(pcapData.data.size)
+        return ResponseEntity.ok(pcapData.pcapData.size)
     }
 }

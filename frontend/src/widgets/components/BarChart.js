@@ -25,7 +25,6 @@ function BarChart (props) {
 	if (!data) {
 		data = templateData;
 	}
-
 	return (
 		<ResponsiveBar
 			data={data}

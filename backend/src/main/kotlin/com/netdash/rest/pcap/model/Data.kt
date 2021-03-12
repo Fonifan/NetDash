@@ -1,5 +1,4 @@
 package com.netdash.rest.pcap.model
 
-interface Data {
-    fun get(): Collection<Map<String, Any>>
+open class Data(val data: Collection<Map<String, Any>>) {
 }

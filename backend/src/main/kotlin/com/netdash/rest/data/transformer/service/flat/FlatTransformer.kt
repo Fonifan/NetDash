@@ -8,12 +8,12 @@ class FlatTransformer(
     private val quantifier: String,
 ) :
     Transformer {
-    private val collector: MutableCollection<Map<String, String>> = mutableListOf()
+    private val collector: MutableCollection<Map<String, Any>> = mutableListOf()
 
-    override fun transform(data: Data): FlatTransformedData {
-        data.get().forEach { row ->
-            val qualifierValue = row[qualifier].toString()
-            val quantifierValue = row[quantifier].toString()
+    override fun transform(data: Data): Data {
+        data.data.forEach { row ->
+            val qualifierValue = row[qualifier] ?: throw IllegalArgumentException("Can't get qualifier $qualifier from $row")
+            val quantifierValue = row[quantifier] ?: throw IllegalArgumentException("Can't get quantifier $quantifier from $row")
 
             collector.add(mapOf(
                 qualifier to qualifierValue,
@@ -21,6 +21,6 @@ class FlatTransformer(
             ))
         }
 
-        return FlatTransformedData(collector)
+        return Data(collector)
     }
 }
