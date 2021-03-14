@@ -3,7 +3,6 @@ FROM node:13.12.0-alpine as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app
-COPY yarn.lock /app
 RUN rm -rf node_modules && yarn install --frozen-lockfile
 COPY . /app
 RUN yarn run build
