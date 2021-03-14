@@ -19,7 +19,7 @@ open class RestApplication {
     open fun corsConfigurer(): WebMvcConfigurer {
         return object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
-                registry.addMapping("/api/**").allowedOrigins("http://localhost:3000")
+                registry.addMapping("/api/**").allowedOriginPatterns("http://localhost*")
             }
         }
     }

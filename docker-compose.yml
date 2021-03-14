@@ -8,6 +8,8 @@ services:
     container_name: "backend"
     ports:
       - "8080:8080"
+    depends_on:
+      - database
 
   frontend:
     build:
@@ -22,7 +24,7 @@ services:
   database:
     image: timescale/timescaledb:latest-pg12
     ports:
-      - "5400:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=netdash
       - POSTGRES_PASSWORD=netdash

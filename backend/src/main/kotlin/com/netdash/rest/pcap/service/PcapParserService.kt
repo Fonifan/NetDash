@@ -8,10 +8,10 @@ import java.nio.file.Path
 @Service
 open class PcapParserService {
 
-    fun parse(filePath: Path): PcapData {
+    fun parse(filePath: Path, originalFilename: String): PcapData {
         val errorBuffer = StringBuilder()
         val pcap = Pcap.openOffline(filePath.toString(), errorBuffer)
-        val packetParser = PacketParser(filePath.fileName.toString())
+        val packetParser = PacketParser(originalFilename)
         pcap.loop(Pcap.LOOP_INFINITE, packetParser, errorBuffer)
         pcap.close()
         return packetParser.getData()

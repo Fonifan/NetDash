@@ -1,9 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import LineChart from '../widgets/components/LineChart';
 import BarChart from '../widgets/components/BarChart';
-import VictoryBarChart from '../widgets/components/VictoryBarChart';
-import { Bar } from '@nivo/bar';
 
 const fractionAmount = 10;
 

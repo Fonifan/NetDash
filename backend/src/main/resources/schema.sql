@@ -1,4 +1,4 @@
-create table pcap (
+create table if not exists pcap (
     sourceIp        text,
     destinationIp   text,
     sourcePort      int,
@@ -38,8 +38,10 @@ begin
       new.octets,
       new.name);
     return null;
-end
+end;
 $$;
+
+DROP TRIGGER IF EXISTS before_insert_on_pcap on public.pcap;
 
 create trigger before_insert_on_pcap
     before insert

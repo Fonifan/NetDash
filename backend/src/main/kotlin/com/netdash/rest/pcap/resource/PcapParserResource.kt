@@ -21,7 +21,7 @@ class PcapParserResource(
     @PostMapping
     fun parsePcapFile(@RequestParam("file") file: MultipartFile): ResponseEntity<Int> {
         val path = fileService.store(file)
-        val pcapData = pcapParserService.parse(path)
+        val pcapData = pcapParserService.parse(path, file.originalFilename!!)
         pcapRepository.save(pcapData)
         fileService.delete(path)
         return ResponseEntity.ok(pcapData.pcapData.size)
