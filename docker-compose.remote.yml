@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  backend:
+    image: fonifan/netdash_backend:latest
+    container_name: "backend"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+
+  frontend:
+    image: fonifan/netdash_frontend:latest
+    container_name: "frontend"
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  database:
+    image: timescale/timescaledb:latest-pg12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=netdash
+      - POSTGRES_PASSWORD=netdash
