@@ -10,7 +10,10 @@ import {
 import NavigationBar from './navigation/NavigationBar';
 import DatasourcePresenter from './datasources/DatasourcePresenter';
 import HomePresenter from './home/HomePresenter';
-import ConversationDashboard from './conversation/ConverastionDashboard';
+import ConversationDashboard from './dashboard/conversation/ConverastionDashboard';
+import FileDashboard from './dashboard/files/FileDashboard';
+import EncryptedDashboard from './dashboard/encrypted/EncryptedDashboard';
+import DomainDashboard from './dashboard/domain/DomainDashboard';
 
 const useStyles = createUseStyles({
 	app: {
@@ -37,6 +40,15 @@ function App () {
 					</Route>
 					<Route path='/dashboard/conversation'>
 						<ConversationDashboard/>
+					</Route>
+					<Route path='/dashboard/file'>
+						<FileDashboard/>
+					</Route>
+					<Route path='/dashboard/encrypted'>
+						<EncryptedDashboard/>
+					</Route>
+					<Route path='/dashboard/domain'>
+						<DomainDashboard/>
 					</Route>
 					<Route path='/'>
 						<HomePresenter/>

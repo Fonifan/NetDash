@@ -11,10 +11,21 @@ function TimeLineWidget (props) {
 		props.onDomainChange(domain);
 		setSelectedDomain(domain);
 	};
-	const data = props.data.map((d) => ({
-		x: new Date(new Date(d.x).toLocaleString('en-US', { timeZone: 'UTC' })),
-		y: d.y
-	}));
+	let data;
+
+	if (props.data) {
+		data = props.data.map((d) => ({
+			x: new Date(new Date(d.x).toLocaleString('en-US', { timeZone: 'UTC' })),
+			y: d.y
+		}));
+	} else {
+		data = [
+			{
+				x: 1000,
+				y: 1
+			}
+		];
+	}
 
 	return (
 		<VictoryChart

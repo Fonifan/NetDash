@@ -1,6 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import BarChart from '../widgets/components/BarChart';
+import BarChart from '../../widgets/components/BarChart';
 
 const fractionAmount = 10;
 

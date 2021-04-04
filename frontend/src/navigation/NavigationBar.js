@@ -34,7 +34,7 @@ const useStyles = createUseStyles({
 
 function NavigationBar () {
 	const classes = useStyles();
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState(false);
 	const handleClick = () => {
 		setOpen(!open);
 	};
@@ -61,6 +61,21 @@ function NavigationBar () {
 					<ListItem>
 						<Link to='/dashboard/conversation' className={classes.linkContainer}>
 							<ListItemText primary='Conversations'/>
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link to='/dashboard/file' className={classes.linkContainer}>
+							<ListItemText primary='File'/>
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link to='/dashboard/encrypted' className={classes.linkContainer}>
+							<ListItemText primary='Encrypted Traffic'/>
+						</Link>
+					</ListItem>
+					<ListItem>
+						<Link to='/dashboard/domain' className={classes.linkContainer}>
+							<ListItemText primary='Resolved Domains'/>
 						</Link>
 					</ListItem>
 				</List>

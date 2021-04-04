@@ -1,12 +1,11 @@
-package com.netdash.rest.pcap.repository
+package com.netdash.rest.pcap.model.conversation
 
-import com.netdash.rest.pcap.model.ConsumedPacket
 import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 
-class PcapRowMapper : RowMapper<ConsumedPacket> {
-    override fun mapRow(resultSet: ResultSet, rowNumber: Int): ConsumedPacket {
-        return ConsumedPacket(
+class ConversationRowMapper : RowMapper<ConversationPacket> {
+    override fun mapRow(resultSet: ResultSet, rowNumber: Int): ConversationPacket {
+        return ConversationPacket(
             resultSet.getString("sourceIp"),
             resultSet.getString("destinationIp"),
             resultSet.getInt("sourcePort"),

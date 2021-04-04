@@ -24,10 +24,16 @@ function BarChart (props) {
 
 	if (!data) {
 		data = templateData;
+	} else {
+		data.forEach(el => {
+			el.ts = new Date(new Date(parseInt(el.ts)).toLocaleString('en-US', { timeZone: 'Etc/UTC' }));
+		});
 	}
 	return (
 		<ResponsiveBar
 			data={data}
+			keys={Array.from(new Set(data.map(e => Object.keys(e)).flatMap(e => e)).values()).filter(e => e !== 'ts')}
+			indexBy='ts'
 			margin={{
 				top: 40,
 				right: 80,
@@ -37,6 +43,8 @@ function BarChart (props) {
 			colors={{ scheme: 'set1' }}
 			animate={false}
 			axisBottom={null}
+			enableLabel={false}
+
 		/>);
 }
 
