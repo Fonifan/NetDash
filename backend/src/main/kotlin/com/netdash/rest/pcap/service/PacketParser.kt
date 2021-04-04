@@ -1,7 +1,7 @@
 package com.netdash.rest.pcap.service
 
-import com.netdash.rest.pcap.model.ConsumedPacket
-import com.netdash.rest.pcap.model.PcapData
+import com.netdash.rest.pcap.model.conversation.ConversationPacket
+import com.netdash.rest.pcap.model.conversation.ConversationData
 import org.jnetpcap.packet.JPacket
 import org.jnetpcap.packet.JPacketHandler
 import org.jnetpcap.packet.format.FormatUtils
@@ -14,7 +14,7 @@ import org.jnetpcap.protocol.tcpip.Udp
 
 
 class PacketParser(private val name: String) : JPacketHandler<StringBuilder> {
-    private val data: MutableList<ConsumedPacket> = mutableListOf()
+    private val data: MutableList<ConversationPacket> = mutableListOf()
     private var unknownPackets = 0
     override fun nextPacket(packet: JPacket?, errorBuffer: StringBuilder?) {
         if (packet == null)
@@ -74,7 +74,7 @@ class PacketParser(private val name: String) : JPacketHandler<StringBuilder> {
             return
         }
         data.add(
-            ConsumedPacket(
+            ConversationPacket(
                 sourceIp,
                 destinationIp,
                 sourcePort,
@@ -86,7 +86,7 @@ class PacketParser(private val name: String) : JPacketHandler<StringBuilder> {
         )
     }
 
-    fun getData(): PcapData {
-        return PcapData(name, data)
+    fun getData(): ConversationData {
+        return ConversationData(name, data)
     }
 }
