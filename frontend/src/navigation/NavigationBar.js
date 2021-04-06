@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
 import {
-	Link
+	Link as ReachLink
 } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import { DashboardTwoTone, StorageTwoTone, HomeTwoTone, ExpandLess, ExpandMore, Home } from '@material-ui/icons';
-import { Collapse, ListItemIcon, ListItemText } from '@material-ui/core';
+import { List, ListItem, Link, Button, Collapse, Box } from '@chakra-ui/react';
 
 const useStyles = createUseStyles({
 	nav: {
-		padding: '10px',
+		padding: '20px',
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'center',
-		backgroundColor: '#292929'
+		backgroundColor: '#292929',
+		minWidth: '220px'
 	},
 	linkContainer: {
 		display: 'flex',
@@ -22,6 +20,7 @@ const useStyles = createUseStyles({
 		justifyContent: 'center',
 		alignItems: 'center',
 		textDecoration: 'none',
+		padding: '10px',
 		color: '#ffffff'
 	},
 	linkText: {
@@ -29,6 +28,10 @@ const useStyles = createUseStyles({
 	},
 	icon: {
 		color: '#ffffff'
+	},
+	dashboardContainer: {
+		padding: '10px',
+		backgroundColor: '#3C3C3C'
 	}
 });
 
@@ -40,53 +43,50 @@ function NavigationBar () {
 	};
 	return (
 		<List className={classes.nav}>
-			<ListItem button>
-				<Link to='/' className={classes.linkContainer}>
-					<ListItemIcon>
-						<Home className={classes.icon}/>
-					</ListItemIcon>
-					<ListItemText primary='Home'/>
+			<ListItem className={classes.linkContainer}>
+				<Link as={ReachLink} to='/'>
+					Home
 				</Link>
 			</ListItem>
-			<ListItem button onClick={handleClick}>
-				<ListItemIcon>
-					<DashboardTwoTone className={classes.icon}/>
-				</ListItemIcon>
-				<ListItemText primary='Dashboard' className={classes.linkContainer}/>
-				{open ? <ExpandLess/> : <ExpandMore/>}
+			<ListItem className={classes.linkContainer}>
+				<Button
+					color='white'
+					onClick={handleClick}
+					variant='link'>
+					Dashboards
+				</Button>
 			</ListItem>
 
-			<Collapse in={open} timeout='auto' unmountOnExit>
-				<List component='div' disablePadding>
-					<ListItem>
-						<Link to='/dashboard/conversation' className={classes.linkContainer}>
-							<ListItemText primary='Conversations'/>
-						</Link>
-					</ListItem>
-					<ListItem>
-						<Link to='/dashboard/file' className={classes.linkContainer}>
-							<ListItemText primary='File'/>
-						</Link>
-					</ListItem>
-					<ListItem>
-						<Link to='/dashboard/encrypted' className={classes.linkContainer}>
-							<ListItemText primary='Encrypted Traffic'/>
-						</Link>
-					</ListItem>
-					<ListItem>
-						<Link to='/dashboard/domain' className={classes.linkContainer}>
-							<ListItemText primary='Resolved Domains'/>
-						</Link>
-					</ListItem>
-				</List>
+			<Collapse in={open} unmountOnExit>
+				<Box className={classes.dashboardContainer}>
+					<List>
+						<ListItem className={classes.linkContainer}>
+							<Link as={ReachLink} to='/dashboard/conversation'>
+								Conversations
+							</Link>
+						</ListItem>
+						<ListItem className={classes.linkContainer}>
+							<Link as={ReachLink} to='/dashboard/file'>
+								File
+							</Link>
+						</ListItem>
+						<ListItem className={classes.linkContainer}>
+							<Link as={ReachLink} to='/dashboard/encrypted'>
+								Encrypted Traffic
+							</Link>
+						</ListItem>
+						<ListItem className={classes.linkContainer}>
+							<Link as={ReachLink} to='/dashboard/domain'>
+								Resolved Domains
+							</Link>
+						</ListItem>
+					</List>
+				</Box>
 			</Collapse>
 
-			<ListItem button>
-				<Link to='/datasources' className={classes.linkContainer}>
-					<ListItemIcon>
-						<StorageTwoTone className={classes.icon}/>
-					</ListItemIcon>
-					<ListItemText primary='Datasources'/>
+			<ListItem className={classes.linkContainer}>
+				<Link as={ReachLink} to='/datasources'>
+					Datasources
 				</Link>
 			</ListItem>
 		</List>

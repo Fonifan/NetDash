@@ -1,6 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import BarChart from '../../widgets/components/BarChart';
+import SankeyChart from '../../widgets/components/SankeyChart';
 
 const fractionAmount = 10;
 
@@ -39,21 +40,26 @@ const useStyles = createUseStyles({
 
 function ConversationWidgetGrid (props) {
 	const classes = useStyles();
-	const { totalSourceOctets, totalDestinationOctets, octetsByProtocol, packetsBySourceIp } = props.dataMap;
+	const {
+		totalSourceOctets,
+		totalDestinationOctets,
+		sourceToProtocolByOctets,
+		octetsBySourceIp
+	} = props.dataMap;
 
 	return (
 		<div className={classes.grid}>
 			<div className={classes.totalSourceOctets}>
-				<BarChart data={totalSourceOctets}/>
+				<BarChart data={totalSourceOctets} threeDimensions/>
 			</div>
 			<div className={classes.totalDestinationOctets}>
-				<BarChart data={totalDestinationOctets}/>
+				<BarChart data={totalDestinationOctets} threeDimensions/>
 			</div>
 			<div className={classes.octetsByProtocol}>
-				<BarChart data={octetsByProtocol}/>
+				<SankeyChart data={sourceToProtocolByOctets}/>
 			</div>
 			<div className={classes.packetsBySourceIp}>
-				<BarChart data={packetsBySourceIp}/>
+				<BarChart data={octetsBySourceIp}/>
 			</div>
 		</div>
 	);

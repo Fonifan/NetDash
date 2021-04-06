@@ -16,4 +16,14 @@ enum class TableIdentifier(val tableName: String, val short: String) {
     fun getName(): String {
         return tableName
     }
+
+    companion object {
+        fun from(str: String): TableIdentifier = when (str) {
+            "conversation" -> CONVERSATION
+            "file" -> FILE
+            "encrypted" -> ENCRYPTED
+            "domain" -> DOMAIN
+            else -> throw IllegalArgumentException("Can't find table with name: [${str}]")
+        }
+    }
 }

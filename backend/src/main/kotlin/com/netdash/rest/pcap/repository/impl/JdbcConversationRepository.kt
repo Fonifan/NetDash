@@ -56,7 +56,7 @@ open class JdbcConversationRepository(
     }
 
     override fun delete(name: String): Boolean {
-        return jdbcTemplate.update("drop table ${tableIdentifier.name}_${name}") == 1
+        return jdbcTemplate.update("drop table ${tableIdentifier.prepareTableName(name, false)} cascade ") == 1
     }
 
     private fun createBuckets(newTableName: String) {

@@ -1,8 +1,12 @@
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
+import {
+	Modal,
+	ModalContent,
+	ModalHeader,
+	ModalBody,
+	ModalCloseButton
+} from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import Button from '@material-ui/core/Button';
 import AddPcapForm from './AddPcapForm';
 
 const useStyles = createUseStyles({
@@ -13,27 +17,20 @@ const useStyles = createUseStyles({
 
 function NewDatasourceDialog (props) {
 	const classes = useStyles();
-	const [datasource, setDatasource] = useState({});
-
-	const onUpdateDatasource = (name, property) => {
-		datasource[name] = property;
-	};
 
 	return (
-		<Dialog
-			open={props.open}
-			onClose={props.onClose}>
-			<DialogTitle>Add new datasource</DialogTitle>
-			<div className={classes.form}>
-				<AddPcapForm onUpdateDatasource={onUpdateDatasource}/>
-			</div>
-			<Button onClick={() => {
-				props.onSubmit(datasource);
-				props.onClose();
-			}}>
-				Submit
-			</Button>
-		</Dialog>);
+		<Modal
+			isOpen={props.open}
+			onClose={props.onClose}
+		>
+			<ModalContent>
+				<ModalHeader>Add new datasource</ModalHeader>
+				<ModalCloseButton/>
+				<ModalBody className={classes.form}>
+					<AddPcapForm onSubmit={props.onSubmit}/>
+				</ModalBody>
+			</ModalContent>
+		</Modal>);
 }
 
 export default NewDatasourceDialog;

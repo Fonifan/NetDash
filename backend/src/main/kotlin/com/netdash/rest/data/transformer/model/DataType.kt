@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonValue
 
 enum class DataType(private val type: String) {
     BAR("bar"),
-    FLAT("flat");
+    FLAT("flat"),
+    SANKEY("sankey");
 
     @JsonValue
     fun getType(): String {

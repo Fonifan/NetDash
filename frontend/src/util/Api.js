@@ -1,30 +1,69 @@
 import { HostPath } from '../Constant';
 
 class Api {
-	static get (url) {
+	static async get (url) {
 		const queryUrl = HostPath.API + url;
-		return fetch(queryUrl, {
+		const response = await fetch(queryUrl, {
 			method: 'GET'
-		}).then((response) => response.json());
+		});
+		const data = await response.json();
+		return new Promise((resolve, reject) => {
+			if (response.ok) {
+				resolve(data);
+			} else {
+				reject(data);
+			}
+		});
 	}
 
-	static post (url, body) {
+	static async post (url, body) {
 		const queryUrl = HostPath.API + url;
-		return fetch(queryUrl, {
+		const response = await fetch(queryUrl, {
 			method: 'POST',
 			body: JSON.stringify(body),
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then((response) => response.json());
+		});
+		const data = await response.json();
+		return new Promise((resolve, reject) => {
+			if (response.ok) {
+				resolve(data);
+			} else {
+				reject(data);
+			}
+		});
 	}
 
-	static postForm (url, form) {
+	static async postForm (url, form) {
 		const queryUrl = HostPath.API + url;
-		return fetch(queryUrl, {
+		const response = await fetch(queryUrl, {
 			method: 'POST',
 			body: form
-		}).then((response) => response.json());
+		});
+		const data = await response.json();
+		return new Promise((resolve, reject) => {
+			if (response.ok) {
+				resolve(data);
+			} else {
+				reject(data);
+			}
+		});
+	}
+
+	static async delete (url, id) {
+		const queryUrl = HostPath.API + url + '?' + new URLSearchParams(id);
+		const response = await fetch(queryUrl, {
+			method: 'DELETE'
+		});
+		const data = await response.json();
+		return new Promise((resolve, reject) => {
+			if (response.ok) {
+				resolve(data);
+			} else {
+				reject(data);
+			}
+		});
 	}
 }
 

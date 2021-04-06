@@ -3,6 +3,7 @@ package com.netdash.rest.data.resource
 import com.netdash.rest.data.database.QueryExecutionService
 import com.netdash.rest.data.model.BatchDataRequestMetaData
 import com.netdash.rest.data.model.DataRequestMetaData
+import com.netdash.rest.data.model.DataRequestVariables
 import com.netdash.rest.data.transformer.service.TransformerFactory
 import com.netdash.rest.pcap.model.Data
 import org.springframework.http.ResponseEntity
@@ -19,7 +20,8 @@ class DataResource(private val queryExecutionService: QueryExecutionService) {
     fun getData(
         @RequestBody dataRequestMetaData: DataRequestMetaData,
     ): ResponseEntity<Data> {
-        val data = executeDataRequest(dataRequestMetaData) ?: return ResponseEntity.notFound().build()
+        val data =
+            executeDataRequest(dataRequestMetaData, DataRequestVariables(mapOf())) ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(data)
     }
@@ -28,14 +30,15 @@ class DataResource(private val queryExecutionService: QueryExecutionService) {
     fun getBatch(
         @RequestBody batchDataRequestMetaData: BatchDataRequestMetaData,
     ): ResponseEntity<Map<String, Data?>> {
-        val dataRequestMap = batchDataRequestMetaData.metaDataMap.entries.associateBy({ it.key }, { executeDataRequest(it.value) })
+        val dataRequestMap = batchDataRequestMetaData.metaDataMap.entries.associateBy({ it.key },
+            { executeDataRequest(it.value, batchDataRequestMetaData.variables) })
 
         return ResponseEntity.ok(dataRequestMap)
     }
 
 
-    private fun executeDataRequest(dataRequestMetaData: DataRequestMetaData): Data? {
-        val data = queryExecutionService.executeQuery(dataRequestMetaData) ?: return null
+    private fun executeDataRequest(dataRequestMetaData: DataRequestMetaData, variables: DataRequestVariables?): Data? {
+        val data = queryExecutionService.executeQuery(dataRequestMetaData, variables) ?: return null
 
         return TransformerFactory().getTransformer(dataRequestMetaData).transform(data)
     }

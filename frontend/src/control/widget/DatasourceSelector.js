@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MenuItem, Select } from '@material-ui/core';
+import { Select } from '@chakra-ui/react';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
@@ -19,7 +19,7 @@ function DatasourceSelector (props) {
 		<div className={classes.select}>
 			<Select onChange={onChange} value={selected}>
 				{
-					Object.keys(props.datasources).map((datasource) => <MenuItem key={datasource} value={datasource}>{datasource}</MenuItem>)
+					Object.keys(props.datasources).map((datasource) => <option key={datasource} value={datasource}>{datasource}</option>)
 				}
 			</Select>
 		</div>

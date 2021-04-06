@@ -20,32 +20,58 @@ const templateData = [
 ];
 
 function BarChart (props) {
-	let { data } = props;
-
+	let { data, threeDimensions } = props;
+	let keys;
+	let indexBy;
 	if (!data) {
 		data = templateData;
 	} else {
-		data.forEach(el => {
-			el.ts = new Date(new Date(parseInt(el.ts)).toLocaleString('en-US', { timeZone: 'Etc/UTC' }));
-		});
+		if (threeDimensions) {
+			data.forEach(el => {
+				if (!(el.ts instanceof Date)) {
+					el.ts = new Date(new Date(parseInt(el.ts)).toLocaleString('en-US', { timeZone: 'Etc/UTC' }));
+				}
+			});
+			keys = Array.from(new Set(data.map(e => Object.keys(e)).flatMap(e => e)).values()).filter(e => e !== 'ts');
+			indexBy = 'ts';
+		}
 	}
-	return (
-		<ResponsiveBar
-			data={data}
-			keys={Array.from(new Set(data.map(e => Object.keys(e)).flatMap(e => e)).values()).filter(e => e !== 'ts')}
-			indexBy='ts'
-			margin={{
-				top: 40,
-				right: 80,
-				bottom: 80,
-				left: 80
-			}}
-			colors={{ scheme: 'set1' }}
-			animate={false}
-			axisBottom={null}
-			enableLabel={false}
-
-		/>);
+	if (threeDimensions) {
+		return (
+			<ResponsiveBar
+				data={data}
+				keys={keys}
+				indexBy={indexBy}
+				margin={{
+					top: 40,
+					right: 80,
+					bottom: 80,
+					left: 80
+				}}
+				colors={{ scheme: 'set1' }}
+				animate={false}
+				axisBottom={null}
+				enableLabel={false}
+			/>
+		);
+	} else {
+		return (
+			<ResponsiveBar
+				data={data}
+				margin={{
+					top: 40,
+					right: 80,
+					bottom: 80,
+					left: 80
+				}}
+				colors={{ scheme: 'set1' }}
+				animate={false}
+				axisBottom={null}
+				enableLabel={true}
+				layout='horizontal'
+			/>
+		);
+	}
 }
 
 export default BarChart;

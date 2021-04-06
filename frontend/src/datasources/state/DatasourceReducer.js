@@ -2,9 +2,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { addDatasource, editDatasource, removeDatasource, setDatasources } from './DatasourceAction';
 
 const initialState = {
-	datasources: {
-
-	}
+	datasources: {}
 };
 
 const datasourceReducer = createReducer(initialState, {
@@ -25,14 +23,15 @@ function addDatasourceAction (state, action) {
 }
 
 function removeDatasourceAction (state, action) {
-	const { id } = action.payload;
-	state.datasources[id] = null;
+	if (action.payload) {
+		delete state.datasources[action.payload];
+	}
 }
 
 function editDatasourceAction (state, action) {
 	const { datasource } = action.payload;
 	if (datasource) {
-		state.datasources[datasource.id] = datasource;
+		state.datasources[datasource.id] = { ...state.datasources[datasource.id], ...datasource };
 	}
 }
 

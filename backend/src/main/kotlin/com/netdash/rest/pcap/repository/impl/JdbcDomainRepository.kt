@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 import java.sql.PreparedStatement
 
 @Repository
-class JdbcDomainRepository(
+open class JdbcDomainRepository(
     @Autowired val jdbcTemplate: JdbcTemplate,
 ) : PcapRepository {
     override val tableIdentifier: TableIdentifier
@@ -55,6 +55,6 @@ class JdbcDomainRepository(
     }
 
     override fun delete(name: String): Boolean {
-        return jdbcTemplate.update("drop table ${tableIdentifier.name}_${name}") == 1
+        return jdbcTemplate.update("drop table ${tableIdentifier.prepareTableName(name, false)} cascade ") == 1
     }
 }

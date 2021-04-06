@@ -3,7 +3,7 @@ import TimeLineWidget from './widget/TimeLineWidget';
 import VariableList from '../variable/presenter/VariableList';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
-import { addVariable, removeVariable } from '../variable/state/VariableAction';
+import { addVariables } from '../variable/state/VariableAction';
 import DatasourceSelector from './widget/DatasourceSelector';
 import { VariableName } from '../Constant';
 
@@ -16,21 +16,22 @@ const useStyles = createUseStyles({
 
 function ControlPanel (props) {
 	const {
-		addVariable,
-		removeVariable
+		addVariables
 	} = props;
 
 	const classes = useStyles();
 
 	const onDomainChange = (domain) => {
-		addVariable({
-			name: VariableName.START_DATE,
-			value: domain.x[0].getTime()
-		});
-		addVariable({
-			name: VariableName.END_DATE,
-			value: domain.x[1].getTime()
-		});
+		addVariables([
+			{
+				name: VariableName.START_DATE,
+				value: domain.x[0].getTime()
+			},
+			{
+				name: VariableName.END_DATE,
+				value: domain.x[1].getTime()
+			}
+		]);
 	};
 
 	return (
@@ -47,7 +48,6 @@ export default connect(
 		variables: state.variable.variables
 	}),
 	{
-		addVariable,
-		removeVariable
+		addVariables
 	}
 )(ControlPanel);
