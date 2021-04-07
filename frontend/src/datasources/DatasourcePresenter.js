@@ -52,7 +52,8 @@ function DatasourcePresenter (props) {
 			datasource: {
 				id: file.name,
 				status: DatasourceStatus.Status.LOADING,
-				type
+				type,
+				variants: []
 			}
 		});
 		setDialogueOpen(false);
@@ -61,7 +62,8 @@ function DatasourcePresenter (props) {
 				datasource: {
 					id: file.name,
 					length: pcap,
-					status: DatasourceStatus.Status.READY
+					status: DatasourceStatus.Status.READY,
+					variants: []
 				}
 			});
 		}).catch((error) => {
@@ -95,7 +97,7 @@ function DatasourcePresenter (props) {
 					Reload Datasources
 				</IconButton>
 			</div>
-			<DatasourceItemPresenter items={datasources} removeDatasource={onRemoveDatasource}/>
+			<DatasourceItemPresenter items={datasources} removeDatasource={onRemoveDatasource} />
 			<NewDatasourceDialog
 				open={dialogueOpen}
 				onSubmit={onSubmit}

@@ -5,6 +5,9 @@ import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import DataService from '../../data/DataService';
 import { clearVariables } from '../../variable/state/VariableAction';
+import { setDatasource } from '../state/DashboardAction';
+
+const dashboardId = 'conversation';
 
 const useStyles = createUseStyles({
 	dashboard: {
@@ -15,17 +18,14 @@ const useStyles = createUseStyles({
 const metaData = {
 	metaDataMap: {
 		overall: {
-			bucketized: true,
 			type: 'flat',
 			mapping: {
 				qualifier: 'x',
 				quantifier: 'y'
 			},
-			query: 'select packettime as x, sum(octets) as y from :pcapName group by packettime order by packettime',
-			tableIdentifier: 'conversation'
+			query: 'select packettime as x, sum(octets) as y from :pcapName group by packettime order by packettime'
 		},
 		totalDestinationOctets: {
-			bucketized: true,
 			type: 'bar',
 			mapping: {
 				qualifier: 'id',
@@ -36,22 +36,9 @@ const metaData = {
 				'  from :pcapName\n' +
 				'/*where*/' +
 				' group by id, ts\n' +
-				' order by ts',
-			tableIdentifier: 'conversation'
+				' order by ts'
 		},
-		// sourceToDestinationByOctets: {
-		// 	bucketized: true,
-		// 	type: 'sankey',
-		// 	mapping: {
-		// 		qualifier: 'x',
-		// 		quantifier: 'y',
-		// 		aggregator: 'z'
-		// 	},
-		// 	query: 'select sourceip as x, destinationip as y, sum(octets) as z from :pcapName group by x,y order by z desc',
-		// 	tableIdentifier: 'conversation'
-		// },
 		totalSourceOctets: {
-			bucketized: true,
 			type: 'bar',
 			mapping: {
 				qualifier: 'id',
@@ -62,22 +49,18 @@ const metaData = {
 				'  from :pcapName\n' +
 				'/*where*/' +
 				' group by id, ts\n' +
-				' order by ts',
-			tableIdentifier: 'conversation'
+				' order by ts'
 		},
 		sourceToProtocolByOctets: {
-			bucketized: true,
 			type: 'sankey',
 			mapping: {
 				qualifier: 'x',
 				quantifier: 'y',
 				aggregator: 'z'
 			},
-			query: 'select sourceip as x, protocol as y, sum(octets) as z from :pcapName /*where*/ group by x,y order by z desc limit 10',
-			tableIdentifier: 'conversation'
+			query: 'select sourceip as x, protocol as y, sum(octets) as z from :pcapName /*where*/ group by x,y order by z desc limit 10'
 		},
 		octetsBySourceIp: {
-			bucketized: true,
 			type: 'flat',
 			mapping: {
 				qualifier: 'id',
@@ -87,8 +70,8 @@ const metaData = {
 				'  from :pcapName\n' +
 				'/*where*/' +
 				' group by id\n' +
-				' order by value desc',
-			tableIdentifier: 'conversation'
+				' order by value desc' +
+				' limit 10'
 		}
 	}
 };
@@ -98,45 +81,50 @@ function ConversationDashboard (props) {
 	const {
 		datasources,
 		variables,
-		clearVariables
+		clearVariables,
+		setDatasource,
+		conversation
 	} = props;
-
-	const [selectedDatasource, setSelectedDatasource] = useState();
+	const { datasource } = conversation;
 	const [dataMap, setDataMap] = useState({});
 
-	const onSelectDatasource = (name) => {
-		setSelectedDatasource(name);
-		const dataService = new DataService(name);
+	const onSelectDatasource = (selected) => {
+		selected.tableIdentifier = dashboardId;
+		setDatasource({ name: dashboardId, datasource: selected });
+		const dataService = new DataService(selected);
 		clearVariables();
 		dataService.getBatch(metaData).then(setDataMap);
 	};
 
 	useEffect(() => {
-		if (selectedDatasource) {
-			const dataService = new DataService(selectedDatasource);
+		if (Object.keys(datasource).length !== 0) {
+			const dataService = new DataService(datasource);
 			dataService.getBatch(metaData, variables).then(setDataMap);
 		}
 	}, [variables]);
 
 	return (
 		<div className={classes.dashboard}>
-			<ConversationWidgetGrid dataMap={dataMap}/>
 			<ControlPanel
-				height={200}
+				height={125}
 				width={500}
 				onSetSelectedDatasource={onSelectDatasource}
 				data={dataMap.overall}
 				datasources={datasources}
+				selectedDatasource={datasource}
 			/>
+			<ConversationWidgetGrid dataMap={dataMap}/>
 		</div>);
 }
 
 export default connect(
-	(state) => ({
+	(state) => ({ // TODO: move dashboard state here
 		datasources: state.datasource.datasources,
-		variables: state.variable.variables
+		variables: state.variable.variables,
+		conversation: state.dashboard.conversation
 	}),
 	{
-		clearVariables
+		clearVariables,
+		setDatasource
 	}
 )(ConversationDashboard);

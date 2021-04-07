@@ -3,11 +3,11 @@ import { createUseStyles } from 'react-jss';
 import BarChart from '../../widgets/components/BarChart';
 import SankeyChart from '../../widgets/components/SankeyChart';
 
-const fractionAmount = 10;
+const fractionAmount = 15;
 
 const useStyles = createUseStyles({
 	grid: {
-		height: 'calc(100% - 200px)',
+		height: 'calc(100% - 150px)',
 		display: 'grid',
 		gridTemplateColumns: `repeat(${fractionAmount}, 1fr)`,
 		gridTemplateRows: `repeat(${fractionAmount}, 1fr)`

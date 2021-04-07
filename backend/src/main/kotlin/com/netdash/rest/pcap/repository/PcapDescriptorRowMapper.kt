@@ -9,7 +9,8 @@ class PcapDescriptorRowMapper : RowMapper<PcapDescriptor> {
         return PcapDescriptor(
             resultSet.getString("name"),
             resultSet.getLong("count"),
-            TableIdentifier.from(resultSet.getString("type"))
+            TableIdentifier.from(resultSet.getString("type")),
+            mutableListOf()
         )
     }
 }

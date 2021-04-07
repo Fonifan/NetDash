@@ -25,15 +25,17 @@ function AddPcapForm (props) {
 	const selectedType = (event) => {
 		setType(event.target.value);
 	};
-	const onSubmitClick = () => {
+	const onSubmitClick = (event) => {
+		event.preventDefault();
 		const datasource = {
 			file,
 			type
 		};
 		props.onSubmit(datasource);
 	};
+
 	return (
-		<form>
+		<form onSubmit={onSubmitClick}>
 			<FormControl id='type' className={classes.control}>
 				<FormLabel>PCAP type</FormLabel>
 				<Select placeholder='Select PCAP type' value={type} onChange={selectedType}>
@@ -50,8 +52,8 @@ function AddPcapForm (props) {
 				<Input type='file' onChange={onFileChange}/>
 			</FormControl>
 			<Button
-				onClick={onSubmitClick}
 				className={classes.control}
+				type='submit'
 			>
 				Submit
 			</Button>

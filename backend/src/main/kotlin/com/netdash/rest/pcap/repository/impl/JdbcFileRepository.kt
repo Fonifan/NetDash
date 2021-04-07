@@ -20,7 +20,7 @@ open class JdbcFileRepository(
 
     override fun findByName(name: String, bucketized: Boolean): FileData? {
         val data =
-            jdbcTemplate.query("select * from ${tableIdentifier.prepareTableName(name, bucketized)}", FileRowMapper()).toList()
+            jdbcTemplate.query("select * from \"${tableIdentifier.prepareTableName(name, bucketized)}\"", FileRowMapper()).toList()
         if (data.isEmpty())
             return null
 
@@ -54,7 +54,7 @@ open class JdbcFileRepository(
     }
 
     override fun delete(name: String): Boolean {
-        return jdbcTemplate.update("drop table ${tableIdentifier.prepareTableName(name, false)} cascade ") == 1
+        return jdbcTemplate.update("drop table \"${tableIdentifier.prepareTableName(name, false)}\" cascade ") == 1
     }
 
 }

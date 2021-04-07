@@ -1,6 +1,6 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { IconButton, Skeleton, Heading } from '@chakra-ui/react';
+import { IconButton, Skeleton, Heading, HStack, Button } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import DatasourceStatus from '../model/DatasourceStatus';
 
@@ -27,33 +27,41 @@ function DatasourceItem (props) {
 		id,
 		length,
 		status,
-		type
+		type,
+		variants
 	} = props.metadata;
 	const classes = useStyles();
-	let deleteIcon;
+	let icons;
 	let item;
+	const onVariantsClick = () => {
+		props.openBucketModal(props.metadata);
+	};
 	if (status === DatasourceStatus.Status.LOADING) {
-		deleteIcon = null;
+		icons = null;
 		item = (<Skeleton height='40px'/>);
 	} else {
-		deleteIcon = (
-			<div className={classes.buttons}>
-				<IconButton icon={<DeleteIcon/>} variant='ghost' onClick={() => {
-					props.removeDatasource(id, type);
-				}}/>
-			</div>
+		icons = (
+            <div className={classes.buttons}>
+                <IconButton icon={<DeleteIcon/>} variant='ghost' onClick={() => {
+                    props.removeDatasource(id, type);
+                }}/>
+            </div>
 		);
-		item = (<p>Packets: {length}</p>);
+		item = (<HStack spacing='20px'>
+                <p>Packets: {length}</p>
+                <Button variant='link' onClick={onVariantsClick}>Views: {variants.length}</Button>
+            </HStack>
+		);
 	}
 	return (
-		<div className={classes.presenter}>
-			<div className={classes.content}>
-				<Heading as='h3' size='md'>{id}</Heading>
-				<p>{type}</p>
-				{item}
-			</div>
-			{deleteIcon}
-		</div>
+        <div className={classes.presenter}>
+            <div className={classes.content}>
+                <Heading as='h3' size='md'>{id}</Heading>
+                <p>{type}</p>
+                {item}
+            </div>
+            {icons}
+        </div>
 	);
 }
 

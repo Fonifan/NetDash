@@ -1,8 +1,8 @@
 import DataApi from './DataApi';
 
 class DataService {
-	constructor (pcapName) {
-		this.pcapName = pcapName;
+	constructor (pcapMeta) {
+		this.pcapMeta = pcapMeta;
 	}
 
 	getBatch (metaData, variables) {
@@ -26,7 +26,7 @@ class DataService {
 	}
 
 	addPcapName (metaData) {
-		metaData.pcapName = this.pcapName;
+		metaData.pcapMetaData = this.pcapMeta;
 		return metaData;
 	}
 

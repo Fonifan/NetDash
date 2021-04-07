@@ -14,6 +14,10 @@ class PcapApi {
 	static delete (name, tableIdentifier) {
 		return Api.delete(pcapUrl, { name, tableIdentifier });
 	}
+
+	static bucketize (pcapName, bucketSize) {
+		return Api.post(pcapUrl + '/bucket', { pcapName, bucketSize });
+	}
 }
 
 export default PcapApi;

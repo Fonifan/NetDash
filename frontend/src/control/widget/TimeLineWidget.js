@@ -35,7 +35,7 @@ function TimeLineWidget (props) {
 			scale={{ x: 'time' }}
 			padding={{
 				top: 0,
-				left: 50,
+				left: 20,
 				right: 50,
 				bottom: bottomPadding
 			}}

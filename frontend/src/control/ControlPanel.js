@@ -4,13 +4,14 @@ import VariableList from '../variable/presenter/VariableList';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
 import { addVariables } from '../variable/state/VariableAction';
-import DatasourceSelector from './widget/DatasourceSelector';
+import DatasourceSelectPopover from './widget/DatasourceSelectPopover';
 import { VariableName } from '../Constant';
 
 const useStyles = createUseStyles({
 	panel: {
 		display: 'flex',
-		flexDirection: 'row'
+		flexDirection: 'row',
+		paddingTop: '20px'
 	}
 });
 
@@ -36,7 +37,7 @@ function ControlPanel (props) {
 
 	return (
 		<div className={classes.panel}>
-			<DatasourceSelector onSelected={props.onSetSelectedDatasource} datasources={props.datasources}/>
+			<DatasourceSelectPopover selectedDatasource={props.selectedDatasource} onSubmit={props.onSetSelectedDatasource} datasources={props.datasources}/>
 			<TimeLineWidget onDomainChange={onDomainChange} height={props.height} width={props.width} data={props.data}/>
 			<VariableList/>
 		</div>

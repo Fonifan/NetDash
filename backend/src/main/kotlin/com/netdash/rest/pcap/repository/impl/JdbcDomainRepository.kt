@@ -20,7 +20,7 @@ open class JdbcDomainRepository(
 
     override fun findByName(name: String, bucketized: Boolean): DomainData? {
         val data =
-            jdbcTemplate.query("select * from ${tableIdentifier.prepareTableName(name, bucketized)}", DomainRowMapper()).toList()
+            jdbcTemplate.query("select * from \"${tableIdentifier.prepareTableName(name, bucketized)}\"", DomainRowMapper()).toList()
         if (data.isEmpty())
             return null
 
@@ -55,6 +55,6 @@ open class JdbcDomainRepository(
     }
 
     override fun delete(name: String): Boolean {
-        return jdbcTemplate.update("drop table ${tableIdentifier.prepareTableName(name, false)} cascade ") == 1
+        return jdbcTemplate.update("drop table \"${tableIdentifier.prepareTableName(name, false)}\" cascade ") == 1
     }
 }

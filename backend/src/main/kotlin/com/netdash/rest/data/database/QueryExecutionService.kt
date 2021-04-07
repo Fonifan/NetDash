@@ -15,9 +15,11 @@ class QueryExecutionService(@Autowired val jdbcTemplate: JdbcTemplate) {
         dataRequestMetaData: DataRequestMetaData,
         variables: DataRequestVariables?
     ): Data? {
-        val (pcapName, bucketized, _, dataMap, query, tableId) = dataRequestMetaData;
-        var preparedQuery = query.replaceFirst(":pcapName", tableId.prepareTableName(pcapName, bucketized))
-        if(variables != null) {
+        val (pcapMetaData, _, dataMap, query) = dataRequestMetaData;
+        val tableId = pcapMetaData.tableIdentifier
+
+        var preparedQuery = query.replaceFirst(":pcapName", "\"${tableId.prepareTableName(pcapMetaData)}\"")
+        if (variables != null) {
             val variableBinder = VariableBinder(preparedQuery, variables, tableId)
             preparedQuery = variableBinder.bind()
         }

@@ -1,6 +1,7 @@
 package com.netdash.rest.pcap.repository
 
 import com.fasterxml.jackson.annotation.JsonValue
+import com.netdash.rest.data.model.PcapMetaData
 
 enum class TableIdentifier(val tableName: String, val short: String) {
     CONVERSATION("conversation", "c"),
@@ -9,12 +10,17 @@ enum class TableIdentifier(val tableName: String, val short: String) {
     DOMAIN("domain", "d");
 
     fun prepareTableName(pcapName: String, bucketized: Boolean): String {
-        return if (bucketized) "\"${short}_${pcapName}_bucket\"" else "\"${short}_$pcapName\""
+        return if (bucketized) "${short}_${pcapName}_bucket" else "${short}_$pcapName"
     }
 
     @JsonValue
     fun getName(): String {
         return tableName
+    }
+
+    fun prepareTableName(pcapMetaData: PcapMetaData): String {
+        val prepared = prepareTableName(pcapMetaData.datasourceName, pcapMetaData.isBucketizationEnabled)
+        return if (pcapMetaData.isBucketizationEnabled) "${prepared}_${pcapMetaData.bucketSize}" else prepared
     }
 
     companion object {

@@ -1,7 +1,8 @@
-import React from 'react';
-import { List, IconButton, ListItem, useToast } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { List, ListItem } from '@chakra-ui/react';
 import { createUseStyles } from 'react-jss';
 import DatasourceItem from './DatasourceItem';
+import BucketModal from '../bucket/BucketModal';
 
 const useStyles = createUseStyles({
 	presenter: {
@@ -15,16 +16,32 @@ const useStyles = createUseStyles({
 
 function DatasourceItemPresenter (props) {
 	const { items } = props;
+	const [bucketModalOpen, setBucketModalOpen] = useState(false);
+	const [datasourceMetadata, setDatasourceMetadata] = useState();
 	const classes = useStyles();
+	const onOpenBucketModal = (datasourceMetadata) => {
+		setDatasourceMetadata(datasourceMetadata);
+		setBucketModalOpen(true);
+	};
+	const onCloseBucketModal = () => {
+		setBucketModalOpen(false);
+	};
 	return (
-		<List className={classes.presenter}>
-			{items ? Object.keys(items).map((key) => {
-				return (
-					<ListItem divider key={key}>
-						<DatasourceItem metadata={items[key]} removeDatasource={props.removeDatasource}/>
-					</ListItem>);
-			}) : null}
-		</List>
+		<>
+			<List className={classes.presenter}>
+				{items ? Object.keys(items).map((key) => {
+					return (
+						<ListItem divider key={key}>
+							<DatasourceItem
+								metadata={items[key]}
+								removeDatasource={props.removeDatasource}
+								openBucketModal={onOpenBucketModal}
+							/>
+						</ListItem>);
+				}) : null}
+			</List>
+			<BucketModal isOpen={bucketModalOpen} onClose={onCloseBucketModal} metaData={datasourceMetadata}/>
+		</>
 	);
 }
 

@@ -17,13 +17,12 @@ import java.sql.PreparedStatement
 open class JdbcConversationRepository(
     @Autowired val jdbcTemplate: JdbcTemplate,
 ) : PcapRepository {
-    private val defaultBucketSize = 1000
     override val tableIdentifier: TableIdentifier
         get() = TableIdentifier.CONVERSATION
 
     override fun findByName(name: String, bucketized: Boolean): ConversationData? {
         val data =
-            jdbcTemplate.query("select * from ${tableIdentifier.prepareTableName(name, bucketized)}", ConversationRowMapper()).toList()
+            jdbcTemplate.query("select * from \"${tableIdentifier.prepareTableName(name, bucketized)}\"", ConversationRowMapper()).toList()
         if (data.isEmpty())
             return null
 
@@ -51,25 +50,10 @@ open class JdbcConversationRepository(
                     return pcapData.pcapData.size
                 }
             })
-
-        this.createBuckets(tableIdentifier.short + "_" + pcapData.name)
     }
 
     override fun delete(name: String): Boolean {
-        return jdbcTemplate.update("drop table ${tableIdentifier.prepareTableName(name, false)} cascade ") == 1
-    }
-
-    private fun createBuckets(newTableName: String) {
-        jdbcTemplate.execute(
-            "create materialized view \"${newTableName + "_bucket"}\" as\n" +
-                    "        select sourceip, destinationip, sourceport, destinationport, pt as packettime, protocol, sum as octets, name\n" +
-                    "          from (\n" +
-                    "              select sourceip, destinationip, sourceport, destinationport, time_bucket($defaultBucketSize, packettime) as pt, protocol,\n" +
-                    "                     sum(octets), name\n" +
-                    "                from \"$newTableName\"\n" +
-                    "               group by sourceip, destinationip, sourceport, destinationport, pt, protocol, name\n" +
-                    "               order by pt\n" +
-                    "          ) as sub")
+        return jdbcTemplate.update("drop table \"${tableIdentifier.prepareTableName(name, false)}\" cascade ") == 1
     }
 }
 

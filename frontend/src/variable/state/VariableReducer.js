@@ -46,7 +46,7 @@ function removeVariableAction (state, action) {
 }
 
 function clearVariablesAction (state, action) {
-	state.variables = {};
+	if (Object.keys(state.variables).length !== 0) { state.variables = {}; }
 }
 
 export default variableReducer;

@@ -20,7 +20,7 @@ open class JdbcEncryptedRepository(
 
     override fun findByName(name: String, bucketized: Boolean): EncryptedData? {
         val data =
-            jdbcTemplate.query("select * from ${tableIdentifier.prepareTableName(name, bucketized)}", EncryptedRowMapper()).toList()
+            jdbcTemplate.query("select * from \"${tableIdentifier.prepareTableName(name, bucketized)}\"", EncryptedRowMapper()).toList()
         if (data.isEmpty())
             return null
 
@@ -56,7 +56,7 @@ open class JdbcEncryptedRepository(
     }
 
     override fun delete(name: String): Boolean {
-        return jdbcTemplate.update("drop table ${tableIdentifier.prepareTableName(name, false)} cascade ") == 1
+        return jdbcTemplate.update("drop table \"${tableIdentifier.prepareTableName(name, false)}\" cascade ") == 1
     }
 
 }
