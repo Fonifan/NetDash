@@ -1,11 +1,13 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { connect } from 'react-redux';
+import { VStack } from '@chakra-ui/react';
 import TimeLineWidget from './widget/TimeLineWidget';
 import VariableList from '../variable/presenter/VariableList';
 import { addVariables } from '../variable/state/VariableAction';
 import DatasourceSelectPopover from './widget/DatasourceSelectPopover';
 import { VariableName } from '../Constant';
+import QueryTypeSelector from './widget/QueryTypeSelector';
 
 const useStyles = createUseStyles({
   panel: {
@@ -39,7 +41,10 @@ function ControlPanel(props) {
 
   return (
     <div className={classes.panel}>
-      <DatasourceSelectPopover selectedDatasource={props.selectedDatasource} onSubmit={props.onSetSelectedDatasource} datasources={props.datasources} />
+      <VStack>
+        <DatasourceSelectPopover selectedDatasource={props.selectedDatasource} onSubmit={props.onSetSelectedDatasource} datasources={props.datasources} />
+        <QueryTypeSelector onSubmit={props.onSelectQueryType} />
+      </VStack>
       <TimeLineWidget onDomainChange={onDomainChange} height={props.height} width={props.width} data={props.data} />
       <VariableList />
     </div>

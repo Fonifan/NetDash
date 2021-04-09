@@ -1,17 +1,3 @@
-const CellSize = 100;
-
-const WidgetName = {
-  PIE: 'pie',
-  BAR: 'bar',
-  WAFFLE: 'waffle',
-  LINE: 'line',
-};
-
-const MapperName = {
-  FLAT: 'flat',
-  LINE_CHART: 'lineChart',
-};
-
 const VariableName = {
   START_DATE: 'startDate',
   END_DATE: 'endDate',
@@ -24,5 +10,5 @@ const HostPath = {
 };
 
 export {
-  CellSize, WidgetName, MapperName, VariableName, HostPath,
+  VariableName, HostPath,
 };

@@ -90,7 +90,8 @@ function DatasourceSelectPopover(props) {
                   <option
                     key={bucket.bucketSize}
                     value={bucket.bucketSize}
-                  >{bucket.bucketSize}
+                  >
+                    {bucket.bucketSize}
                   </option>
                 )) : null}
               </Select>

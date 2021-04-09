@@ -16,10 +16,10 @@ open class ConversationBucketService(@Autowired private val jdbcTemplate: JdbcTe
         val newViewName = this.getViewName(tableIdentifier, bucketizationRequest)
         jdbcTemplate.execute(
             "create materialized view \"$newViewName\" as\n" +
-                    "        select sourceip, destinationip, sourceport, destinationport, pt as packettime, protocol, sum as octets, name\n" +
+                    "        select sourceip, destinationip, sourceport, destinationport, pt as packettime, protocol, sum as octets, packets, name\n" +
                     "          from (\n" +
                     "              select sourceip, destinationip, sourceport, destinationport, time_bucket($bucketSize, packettime) as pt, protocol,\n" +
-                    "                     sum(octets), name\n" +
+                    "                     sum(octets), count(*) as packets, name\n" +
                     "                from \"${tableIdentifier.prepareTableName(pcapName, false)}\"\n" +
                     "               group by sourceip, destinationip, sourceport, destinationport, pt, protocol, name\n" +
                     "               order by pt\n" +
