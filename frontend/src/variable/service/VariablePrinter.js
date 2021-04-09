@@ -1,13 +1,15 @@
 import { VariableName } from '../../Constant';
+import { dateFromUTC } from '../../util/ObjectUtil';
 
 class VariablePrinter {
-	static print (variable) {
-		if (variable[0] === VariableName.START_DATE || variable[0] === VariableName.END_DATE) {
-			return `${variable[0]}: ${new Date(variable[1]).toLocaleString()}`;
-		}
+  static print(variable) {
+    const { name, value } = variable;
+    if (name === VariableName.START_DATE || name === VariableName.END_DATE) {
+      return `${name}: ${dateFromUTC(value).toLocaleString()}`;
+    }
 
-		return `${variable[0]}: ${variable[1]}`;
-	}
+    return `${name}: ${value.toString()}`;
+  }
 }
 
 export default VariablePrinter;

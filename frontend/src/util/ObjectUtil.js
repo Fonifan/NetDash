@@ -1,8 +1,12 @@
-function hasValue (o) {
-	if (o === null || o === undefined) {
-		return false;
-	}
-	return true;
+function hasValue(o) {
+  if (o === null || o === undefined) {
+    return false;
+  }
+  return true;
 }
 
-export { hasValue };
+function dateFromUTC(dateInMs) {
+  return new Date(new Date(dateInMs).toLocaleString('en-US', { timeZone: 'UTC' }));
+}
+
+export { hasValue, dateFromUTC };

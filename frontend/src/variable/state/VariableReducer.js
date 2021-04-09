@@ -1,52 +1,63 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { addVariable, addVariables, clearVariables, removeVariable } from './VariableAction';
+import {
+  addVariable, addVariables, clearVariables, removeVariable,
+} from './VariableAction';
 
 const initialState = {
-	variables: {}
+  variables: [],
 };
 
 const variableReducer = createReducer(initialState, {
-	[addVariable]: addVariableAction,
+  [addVariable]: addVariableAction,
 
-	[addVariables]: addVariablesAction,
+  [addVariables]: addVariablesAction,
 
-	[removeVariable]: removeVariableAction,
+  [removeVariable]: removeVariableAction,
 
-	[clearVariables]: clearVariablesAction
+  [clearVariables]: clearVariablesAction,
 });
-
-function addVariableAction (state, action) {
-	const {
-		name,
-		value
-	} = action.payload;
-	if (name && value) {
-		state.variables[name] = value;
-	}
+function isOverrideVariable(name) {
+  const overrideVariables = [
+    'startDate',
+    'endDate',
+    'only_sourceIp',
+    'only_destinationIp',
+  ];
+  return overrideVariables.includes(name);
 }
 
-function addVariablesAction (state, action) {
-	if (action.payload) {
-		action.payload.forEach((variable) => {
-			const {
-				name,
-				value
-			} = variable;
-
-			if (name && value) {
-				state.variables[name] = value;
-			}
-		});
-	}
+function internalAddVariable(state, variable) {
+  const {
+    name,
+    value,
+  } = variable;
+  if (name && value) {
+    if (isOverrideVariable(name)) {
+      state.variables = state.variables.filter((v) => v.name !== variable.name);
+    }
+    state.variables.push({ name, value });
+  }
 }
 
-function removeVariableAction (state, action) {
-	const { name } = action.payload;
-	state.variables[name] = null;
+function addVariableAction(state, action) {
+  internalAddVariable(state, action.payload);
 }
 
-function clearVariablesAction (state, action) {
-	if (Object.keys(state.variables).length !== 0) { state.variables = {}; }
+function addVariablesAction(state, action) {
+  if (action.payload) {
+    action.payload.forEach((variable) => {
+      internalAddVariable(state, variable);
+    });
+  }
+}
+
+function removeVariableAction(state, action) {
+  const { name, value } = action.payload;
+  state.variables = state.variables.filter((v) => v.name !== name && v.value !== value);
+}
+
+function clearVariablesAction(state, action) {
+  if (state.variables.length !== 0) { state.variables = []; }
 }
 
 export default variableReducer;

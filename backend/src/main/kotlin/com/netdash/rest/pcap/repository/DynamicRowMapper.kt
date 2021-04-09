@@ -7,7 +7,7 @@ import java.sql.ResultSet
 
 class DynamicRowMapper(private val dataMap: DataMap) : RowMapper<DynamicPacket> {
     override fun mapRow(rs: ResultSet, rowNum: Int): DynamicPacket {
-        val row = HashMap<String, Any>(dataMap.size)
+        val row = HashMap<Any, Any>(dataMap.size)
 
         dataMap.values.forEach { columnName ->
             row[columnName] = rs.getObject(columnName)

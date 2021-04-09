@@ -8,7 +8,7 @@ class FlatTransformer(
     private val quantifier: String,
 ) :
     Transformer {
-    private val collector: MutableCollection<Map<String, Any>> = mutableListOf()
+    private val collector: MutableCollection<Map<Any, Any>> = mutableListOf()
 
     override fun transform(data: Data): Data {
         data.data.forEach { row ->

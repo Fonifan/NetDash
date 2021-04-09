@@ -8,8 +8,8 @@ const removeVariable = createAction(`@${moduleName}/REMOVE_VARIABLE`);
 const clearVariables = createAction(`@${moduleName}/CLEAR_VARIABLES`);
 
 export {
-	addVariable,
-	addVariables,
-	removeVariable,
-	clearVariables
+  addVariable,
+  addVariables,
+  removeVariable,
+  clearVariables,
 };

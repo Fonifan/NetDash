@@ -9,12 +9,12 @@ class BarTransformer(
     private val quantifier: String,
 ) :
     Transformer {
-    private val collector: MutableMap<String, MutableMap<String, Any>> = HashMap()
+    private val collector: MutableMap<Any, MutableMap<Any, Any>> = HashMap()
 
     override fun transform(data: Data): Data {
         data.data.forEach { row ->
-            val aggregatorValue = row[aggregator].toString()
-            val qualifierValue = row[qualifier].toString()
+            val aggregatorValue = row[aggregator] ?: throw IllegalArgumentException("Can't get aggregator $quantifier from $row")
+            val qualifierValue = row[qualifier] ?: throw IllegalArgumentException("Can't get qualifier $quantifier from $row")
             val quantifierValue = row[quantifier] ?: throw IllegalArgumentException("Can't get quantifier $quantifier from $row")
 
             if (!collector.containsKey(aggregatorValue)) {

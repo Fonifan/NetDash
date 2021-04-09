@@ -7,6 +7,10 @@ class VariableToColumnMapper(private val tableId: TableIdentifier) {
         "conversation" to mapOf(
             "startDate" to "packettime",
             "endDate" to "packettime",
+            "sourceIp" to "sourceip",
+            "destinationIp" to "destinationip",
+            "only_sourceIp" to "sourceip",
+            "only_destinationIp" to "destinationip"
         )
     )
 

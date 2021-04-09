@@ -21,7 +21,7 @@ class DataResource(private val queryExecutionService: QueryExecutionService) {
         @RequestBody dataRequestMetaData: DataRequestMetaData,
     ): ResponseEntity<Data> {
         val data =
-            executeDataRequest(dataRequestMetaData, DataRequestVariables(mapOf())) ?: return ResponseEntity.notFound().build()
+            executeDataRequest(dataRequestMetaData, DataRequestVariables(listOf())) ?: return ResponseEntity.notFound().build()
 
         return ResponseEntity.ok(data)
     }

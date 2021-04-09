@@ -4,8 +4,9 @@
 		"es6": true
 	},
 	"extends": [
-		"standard",
-		"plugin:react/recommended"
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"airbnb"
 	],
 	"globals": {
 		"Atomics": "readonly",
@@ -22,17 +23,6 @@
 		"react"
 	],
 	"rules": {
-		"indent": [
-			"error",
-			"tab",
-			{
-				"ignoredNodes": [
-					"JSXElement *",
-					"JSXElement"
-				]
-			}
-		],
-		"no-tabs": 0,
 		"semi": [
 			"error",
 			"always"
@@ -49,8 +39,7 @@
 			"prefer-single"
 		],
 		"react/jsx-indent-props": [
-			"error",
-			"tab"
+			"error"
 		],
 		"react/prop-types": [
 			"warn"

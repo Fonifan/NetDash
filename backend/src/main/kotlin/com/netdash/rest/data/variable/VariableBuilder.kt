@@ -6,14 +6,15 @@ import com.netdash.rest.pcap.repository.TableIdentifier
 class VariableBuilder(private val variables: DataRequestVariables, private val tableIdentifier: TableIdentifier) {
     private val columnMapper = VariableToColumnMapper(tableIdentifier)
     private val operationMapper = OperationMapper()
+    private val valueWrapper = ValueWrapper();
     fun build(): String {
         val stringBuilder = StringBuilder()
-        variables.vars.entries.forEachIndexed { idx, entry ->
-            val variableName = entry.key
+        variables.vars.forEachIndexed { idx, entry ->
+            val variableName = entry.name
             val columnName = columnMapper.map(variableName)
             stringBuilder.append(columnName)
             stringBuilder.append(operationMapper.map(variableName))
-            stringBuilder.append(entry.value)
+            stringBuilder.append(valueWrapper.wrap(columnName, entry.value))
             if (idx + 1 == variables.vars.size)
                 stringBuilder.append("\n")
             else

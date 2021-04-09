@@ -41,9 +41,9 @@ function LineChart (props) {
 			data={data}
 			margin={{
 				top: 40,
-				right: 120,
-				bottom: 80,
-				left: 80
+				right: 40,
+				bottom: 40,
+				left: 40
 			}}
 			colors={{ scheme: 'set1' }}
 			slicesLabelsSkipAngle={10}

@@ -5,7 +5,7 @@ import com.netdash.rest.pcap.model.domain.DomainPacket
 import com.netdash.rest.pcap.model.encrypted.EncryptedPacket
 import com.netdash.rest.pcap.model.file.FilePacket
 
-data class DynamicPacket(val data: Map<String, Any>) {
+data class DynamicPacket(val data: Map<Any, Any>) {
     constructor(packet: ConversationPacket) : this(
         mapOf(
             "sourceIp" to packet.sourceIp,
