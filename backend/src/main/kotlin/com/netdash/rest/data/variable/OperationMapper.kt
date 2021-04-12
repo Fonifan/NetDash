@@ -6,11 +6,13 @@ class OperationMapper {
         "endDate" to "<=",
         "sourceIp" to "!=",
         "destinationIp" to "!=",
-        "only_sourceIp" to "=",
-        "only_destinationIp" to "=",
+        "protocol" to "!=",
+        "sourcePort" to "!=",
     )
 
     fun map(variableName: String): String {
+        if (variableName.startsWith("only_"))
+            return "="
         return operationMap[variableName] ?: throw IllegalArgumentException("No operation for variable $variableName")
     }
 }

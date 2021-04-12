@@ -20,10 +20,8 @@ function isOverrideVariable(name) {
   const overrideVariables = [
     'startDate',
     'endDate',
-    'only_sourceIp',
-    'only_destinationIp',
   ];
-  return overrideVariables.includes(name);
+  return overrideVariables.includes(name) || name.startsWith('only_');
 }
 
 function internalAddVariable(state, variable) {
@@ -31,7 +29,7 @@ function internalAddVariable(state, variable) {
     name,
     value,
   } = variable;
-  if (name && value) {
+  if (name) {
     if (isOverrideVariable(name)) {
       state.variables = state.variables.filter((v) => v.name !== variable.name);
     }
@@ -53,7 +51,7 @@ function addVariablesAction(state, action) {
 
 function removeVariableAction(state, action) {
   const { name, value } = action.payload;
-  state.variables = state.variables.filter((v) => v.name !== name && v.value !== value);
+  state.variables = state.variables.filter((v) => !(v.name === name && v.value === value));
 }
 
 function clearVariablesAction(state, action) {

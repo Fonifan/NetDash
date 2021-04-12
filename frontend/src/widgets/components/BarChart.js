@@ -25,7 +25,8 @@ function BarChart(props) {
   let indexBy;
   if (!data) {
     data = templateData;
-  } else if (threeDimensions) {
+  }
+  if (threeDimensions) {
     keys = Array.from(new Set(data.map((e) => Object.keys(e)).flatMap((e) => e)).values()).filter((e) => e !== 'ts');
     indexBy = 'ts';
   }
@@ -39,7 +40,7 @@ function BarChart(props) {
           top: 40,
           right: 40,
           bottom: 40,
-          left: 40,
+          left: 80,
         }}
         colors={{ scheme: 'set1' }}
         tooltip={(node) => (
@@ -69,11 +70,11 @@ function BarChart(props) {
         top: 40,
         right: 40,
         bottom: 40,
-        left: 50,
+        left: 100,
       }}
+      keys={keys}
       colors={{ scheme: 'set1' }}
       animate={false}
-      axisBottom={null}
       enableLabel
       layout='horizontal'
       onClick={props.onClick}

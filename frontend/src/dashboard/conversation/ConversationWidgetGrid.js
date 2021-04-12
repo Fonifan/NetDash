@@ -1,7 +1,7 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss';
+import { VStack } from '@chakra-ui/react';
 import BarChart from '../../widgets/components/BarChart';
-import SankeyChart from '../../widgets/components/SankeyChart';
 
 const fractionAmount = 15;
 
@@ -23,17 +23,29 @@ const useStyles = createUseStyles({
     gridRowStart: 7,
     gridRowEnd: 11,
     gridColumnStart: 1,
+    gridColumnEnd: 9,
+  },
+  destinationToSource: {
+    gridRowStart: 7,
+    gridRowEnd: 11,
+    gridColumnStart: 9,
+    gridColumnEnd: 16,
+  },
+  octetsBySourcePort: {
+    gridRowStart: 11,
+    gridRowEnd: 16,
+    gridColumnStart: 1,
     gridColumnEnd: 7,
   },
   octetsByProtocol: {
-    gridRowStart: 7,
-    gridRowEnd: 11,
+    gridRowStart: 11,
+    gridRowEnd: 16,
     gridColumnStart: 7,
     gridColumnEnd: 11,
   },
   packetsBySourceIp: {
-    gridRowStart: 7,
-    gridRowEnd: 11,
+    gridRowStart: 11,
+    gridRowEnd: 16,
     gridColumnStart: 11,
     gridColumnEnd: 15,
   },
@@ -44,34 +56,65 @@ function ConversationWidgetGrid(props) {
   const {
     totalSourceOctets,
     totalDestinationOctets,
-    sourceToProtocolByOctets,
+    protocolByOctets,
     octetsBySourceIp,
+    octetsBySourcePort,
+    destinationToSource,
   } = props.dataMap;
 
-  const handleSourceIpFilter = (element) => {
-    props.onFilter({ element, filterName: 'sourceIp' });
-  };
-  const handleDestinationIpFilter = (element) => {
-    props.onFilter({ element, filterName: 'destinationIp' });
-  };
-  const handleProtocolFilter = (element) => {
-    props.onFilter({ element, filterName: 'protocol' });
+  const handleFilter = (element, dimensions, filterName) => {
+    if (dimensions === 3) {
+      props.onFilter({ value: element.id, filterName });
+    } else if (dimensions === 2) {
+      props.onFilter({ value: element.indexValue, filterName });
+    }
   };
 
   return (
     <div className={classes.grid}>
-      <div className={classes.totalSourceOctets}>
-        <BarChart data={totalSourceOctets} threeDimensions onClick={handleSourceIpFilter} />
-      </div>
-      <div className={classes.totalDestinationOctets}>
-        <BarChart data={totalDestinationOctets} threeDimensions onClick={handleDestinationIpFilter} />
-      </div>
-      <div className={classes.octetsByProtocol}>
-        <SankeyChart data={sourceToProtocolByOctets} onClick={handleProtocolFilter} />
-      </div>
-      <div className={classes.packetsBySourceIp}>
-        <BarChart data={octetsBySourceIp} onClick={handleSourceIpFilter} />
-      </div>
+      <VStack className={classes.totalSourceOctets}>
+        <p>Total Source IP Octets</p>
+        <BarChart
+          data={totalSourceOctets}
+          threeDimensions
+          onClick={(element) => handleFilter(element, 3, 'sourceIp')}
+        />
+      </VStack>
+
+      <VStack className={classes.totalDestinationOctets}>
+        <p>Total Destination IP Octets</p>
+        <BarChart
+          data={totalDestinationOctets}
+          threeDimensions
+          onClick={(element) => handleFilter(element, 3, 'destinationIp')}
+        />
+      </VStack>
+      {/* <VStack className={classes.destinationToSource}> */}
+      {/*  <p>Destination to Source IP</p> */}
+      {/*  <BarChart data={destinationToSource} threeDimensions onClick={handleDestinationIpFilter} /> */}
+      {/* </VStack> */}
+
+      <VStack className={classes.octetsBySourcePort}>
+        <p>Octets by source port</p>
+        <BarChart
+          data={octetsBySourcePort}
+          onClick={(element) => handleFilter(element, 2, 'sourcePort')}
+        />
+      </VStack>
+      <VStack className={classes.octetsByProtocol}>
+        <p>Octets by Protocol</p>
+        <BarChart
+          data={protocolByOctets}
+          onClick={(element) => handleFilter(element, 2, 'protocol')}
+        />
+      </VStack>
+      <VStack className={classes.packetsBySourceIp}>
+        <p>Octets by source IP</p>
+        <BarChart
+          data={octetsBySourceIp}
+          onClick={(element) => handleFilter(element, 2, 'sourceIp')}
+        />
+      </VStack>
     </div>
   );
 }

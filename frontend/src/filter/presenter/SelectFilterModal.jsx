@@ -35,8 +35,8 @@ export default function SelectFilterModal({ isOpen, onClose, handleSubmit }) {
             <FormControl id='filter' as='fieldset'>
               <RadioGroup value={filter} onChange={handleChange}>
                 <VStack alignItems='start'>
-                  <Radio value='this'>Exclude this</Radio>
-                  <Radio value='others'>Exclude others</Radio>
+                  <Radio key='this' value='this'>Exclude this</Radio>
+                  <Radio key='others' value='others'>Exclude others</Radio>
                 </VStack>
               </RadioGroup>
             </FormControl>

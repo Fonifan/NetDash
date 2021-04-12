@@ -9,13 +9,15 @@ class VariableToColumnMapper(private val tableId: TableIdentifier) {
             "endDate" to "packettime",
             "sourceIp" to "sourceip",
             "destinationIp" to "destinationip",
-            "only_sourceIp" to "sourceip",
-            "only_destinationIp" to "destinationip"
+            "protocol" to "protocol",
+            "sourcePort" to "sourceport",
         )
     )
 
     fun map(variable: String): String {
-        val columnMap = columnMap[tableId.tableName] ?: throw IllegalArgumentException("No column map for ${tableId.tableName}")
-        return columnMap[variable] ?: throw IllegalArgumentException("No variable to column mapping for $variable")
+        val searchString = if (variable.startsWith("only_")) variable.replace("only_", "") else variable
+        val columnMap =
+            columnMap[tableId.tableName] ?: throw IllegalArgumentException("No column map for ${tableId.tableName}")
+        return columnMap[searchString] ?: throw IllegalArgumentException("No variable to column mapping for $variable")
     }
 }

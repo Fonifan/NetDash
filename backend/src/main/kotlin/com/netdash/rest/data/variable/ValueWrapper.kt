@@ -4,6 +4,7 @@ class ValueWrapper {
     private val wrapperSet = setOf(
         "sourceip",
         "destinationip",
+        "protocol"
     )
 
     fun wrap(columnName: String, value: Any): Any {
