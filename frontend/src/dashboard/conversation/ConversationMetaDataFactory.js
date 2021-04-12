@@ -44,14 +44,14 @@ const metaDataSkeleton = {
         quantifier: 'value',
       },
     },
-    // destinationToSource: {
-    //   type: 'chord',
-    //   mapping: {
-    //     qualifier: 'x',
-    //     quantifier: 'y',
-    //     aggregator: 'z',
-    //   },
-    // },
+    destinationToSource: {
+      type: 'chord',
+      mapping: {
+        qualifier: 'x',
+        quantifier: 'y',
+        aggregator: 'z',
+      },
+    },
   },
 };
 
@@ -81,7 +81,7 @@ const querySet = {
         + 'group by id\n'
         + 'order by value desc\n'
         + 'limit 10\n',
-    // destinationToSource: '',
+    destinationToSource: 'select sourceip as x, destinationip as y, sum(octets) as z from :pcapName /*where*/ group by x, y order by z desc limit 10',
   },
   packets: {
     overall: 'select packettime as x,count(*) as y from :pcapName group by packettime order by packettime',
@@ -108,7 +108,7 @@ const querySet = {
         + 'group by id\n'
         + 'order by value desc\n'
         + 'limit 10\n',
-    // destinationToSource: '',
+    destinationToSource: 'select sourceip as x, destinationip as y, count(*) as z from :pcapName /*where*/ group by x, y order by z desc limit 10',
   },
   packetsBucketized: {
     overall: 'select packettime as x,sum(packets) as y from :pcapName group by packettime order by packettime',
@@ -135,7 +135,7 @@ const querySet = {
         + 'group by id\n'
         + 'order by value desc\n'
         + 'limit 10\n',
-    // destinationToSource: '',
+    destinationToSource: 'select sourceip as x, destinationip as y, sum(packets) as z from :pcapName /*where*/ group by x, y order by z desc limit 10',
   },
 };
 

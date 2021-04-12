@@ -2,6 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { VStack } from '@chakra-ui/react';
 import BarChart from '../../widgets/components/BarChart';
+import ChordChart from '../../widgets/components/ChordChart';
 
 const fractionAmount = 15;
 
@@ -23,12 +24,12 @@ const useStyles = createUseStyles({
     gridRowStart: 7,
     gridRowEnd: 11,
     gridColumnStart: 1,
-    gridColumnEnd: 9,
+    gridColumnEnd: 12,
   },
   destinationToSource: {
     gridRowStart: 7,
     gridRowEnd: 11,
-    gridColumnStart: 9,
+    gridColumnStart: 12,
     gridColumnEnd: 16,
   },
   octetsBySourcePort: {
@@ -63,7 +64,7 @@ function ConversationWidgetGrid(props) {
   } = props.dataMap;
 
   const handleFilter = (element, dimensions, filterName) => {
-    if (dimensions === 3) {
+    if (dimensions === 3) { // todo: pass property name with filter value
       props.onFilter({ value: element.id, filterName });
     } else if (dimensions === 2) {
       props.onFilter({ value: element.indexValue, filterName });
@@ -89,10 +90,13 @@ function ConversationWidgetGrid(props) {
           onClick={(element) => handleFilter(element, 3, 'destinationIp')}
         />
       </VStack>
-      {/* <VStack className={classes.destinationToSource}> */}
-      {/*  <p>Destination to Source IP</p> */}
-      {/*  <BarChart data={destinationToSource} threeDimensions onClick={handleDestinationIpFilter} /> */}
-      {/* </VStack> */}
+      <VStack className={classes.destinationToSource}>
+        <p>Destination to Source IP</p>
+        <ChordChart
+          data={destinationToSource}
+          onClick={(element) => handleFilter(element, 3, 'sourceIp')}
+        />
+      </VStack>
 
       <VStack className={classes.octetsBySourcePort}>
         <p>Octets by source port</p>

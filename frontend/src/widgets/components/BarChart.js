@@ -37,7 +37,7 @@ function BarChart(props) {
         keys={keys}
         indexBy={indexBy}
         margin={{
-          top: 40,
+          top: 0,
           right: 40,
           bottom: 40,
           left: 80,
@@ -67,10 +67,15 @@ function BarChart(props) {
     <ResponsiveBar
       data={data}
       margin={{
-        top: 40,
+        top: 0,
         right: 40,
         bottom: 40,
         left: 100,
+      }}
+      axisLeft={{
+        tickSize: 5,
+        tickPadding: 20,
+        tickRotation: 0,
       }}
       keys={keys}
       colors={{ scheme: 'set1' }}

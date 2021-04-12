@@ -18,8 +18,7 @@ const useStyles = createUseStyles({
   },
   item: {
     padding: '5px',
-    border: 'dashed',
-    borderWidth: '1px',
+
   },
 });
 
