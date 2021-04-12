@@ -38,7 +38,7 @@ function TimeLineWidget(props) {
         top: 0,
         left: 20,
         right: 50,
-        bottom: 0,
+        bottom: 40,
       }}
       containerComponent={(
         <VictoryBrushContainer
